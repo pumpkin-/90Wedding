@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.lidroid.xutils.HttpUtils;
@@ -35,11 +34,9 @@ import com.wedding.secretary.networks.VolleyResponseUtils;
 import com.wedding.secretary.networks.domain.HttpData;
 import com.wedding.secretary.networks.domain.HttpParams;
 import com.wedding.secretary.utils.images.SelectImagesFragment;
-import com.wedding.secretary.utils.log.WeddingLog;
 
 import java.io.File;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -136,12 +133,11 @@ public class CompleteUserInfoFragment extends BaseFragment {
 
             //初始化为当前日期
             dp_date_picker = (DatePicker) view.findViewById(R.id.dp_date_picker);
+            dp_date_picker.setCalendarViewShown(false);
             dp_date_picker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                         @Override
                         public void onDateChanged(DatePicker view, int year, int month, int dayOfMonth) {
-                            Toast.makeText(getActivity(), year + " " +
-                                    month + " " + dayOfMonth, Toast.LENGTH_SHORT).show();
                             Date date = new Date(year - 1900, month, dayOfMonth);
                             Message msg = handler.obtainMessage();
                             msg.what = 0;
