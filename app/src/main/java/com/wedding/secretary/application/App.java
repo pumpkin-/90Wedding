@@ -45,6 +45,6 @@ public class App extends Application {
      */
     public static final String USER_REQ_DOUSERLOGIN = "/user/operation/userLogin.action";
     public static final String USER_REQ_DOUSERREGISTE = "/user/operation/userRegiste.action";
-
-
+    public static final String USER_REQ_DOAVATARUPLOAD = "/file/operation/avatarUpload.action";
+    public static final String USER_REQ_DOUSERINFOUPDATE = "/user/operation//updateUserInfo.action";
 }

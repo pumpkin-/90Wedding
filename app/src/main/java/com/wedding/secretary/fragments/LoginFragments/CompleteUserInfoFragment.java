@@ -94,8 +94,6 @@ public class CompleteUserInfoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completeuserinfo, null);
         ViewUtils.inject(this, view);
-        View view1 = inflater.inflate(R.layout.dialog_date_picker, null);
-        ViewUtils.inject(this, view1);
         return view;
     }
 
@@ -130,7 +128,6 @@ public class CompleteUserInfoFragment extends BaseFragment {
             //TODO 选择结婚日期
             //设置Dialog布局
             View view = View.inflate(getActivity(), R.layout.dialog_date_picker, null);
-            dp_date_picker = (DatePicker) view.findViewById(R.id.dp_date_picker);
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setView(view);
 
@@ -138,19 +135,20 @@ public class CompleteUserInfoFragment extends BaseFragment {
             calendar.setTimeInMillis(System.currentTimeMillis());
 
             //初始化为当前日期
+            dp_date_picker = (DatePicker) view.findViewById(R.id.dp_date_picker);
             dp_date_picker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
-                @Override
-                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    Toast.makeText(getActivity(),year+" " +
-                            monthOfYear + " " + dayOfMonth, Toast.LENGTH_SHORT).show();
-                    Date date = new Date(year - 1900, monthOfYear, dayOfMonth);
-                    Message msg = handler.obtainMessage();
-                    msg.what = 0;
-                    msg.obj = date;
-                    handler.sendMessage(msg);
-                }
-            });
+                        @Override
+                        public void onDateChanged(DatePicker view, int year, int month, int dayOfMonth) {
+                            Toast.makeText(getActivity(), year + " " +
+                                    month + " " + dayOfMonth, Toast.LENGTH_SHORT).show();
+                            Date date = new Date(year - 1900, month, dayOfMonth);
+                            Message msg = handler.obtainMessage();
+                            msg.what = 0;
+                            msg.obj = date;
+                            handler.sendMessage(msg);
+                        }
+                    });
 
             builder.setPositiveButton("确  定",
                     new DialogInterface.OnClickListener() {
@@ -179,7 +177,7 @@ public class CompleteUserInfoFragment extends BaseFragment {
             String path = bundle.getString("avatarPath");
             http = new HttpUtils();
 
-            String uploadHost = App.BASE_URL + App.USER_REQ_DOUPLOADAVATAR;
+            String uploadHost = App.BASE_URL + App.USER_REQ_DOAVATARUPLOAD;
             RequestParams params = new RequestParams();
             // params.addBodyParameter("msg",imgtxt.getText().toString());
             params.addBodyParameter(path, new File(path));
