@@ -31,6 +31,7 @@ import com.wedding.secretary.R;
 import com.wedding.secretary.application.App;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.domain.MResult;
+import com.wedding.secretary.networks.ApiUtils.UserRequestUtils;
 import com.wedding.secretary.networks.VolleyResponseUtils;
 import com.wedding.secretary.networks.domain.HttpData;
 import com.wedding.secretary.networks.domain.HttpParams;
@@ -70,20 +71,23 @@ public class CompleteUserInfoFragment extends BaseFragment {
     private EditText et_complete_user_hometown;//家乡
     @ViewInject(R.id.et_complete_user_signature)
     private EditText et_complete_user_signature;//个性签名
+    @ViewInject(R.id.tv_complete_user_save)
+    private TextView tv_complete_user_save;//保存
 
     private DatePicker dp_date_picker;//日期选择器
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");//日期格式
+    private Date date;//Date日期
 
-    HttpUtils http;
+    private HttpUtils http;//网络请求
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                //选择婚期
+                //选择结婚日期
                 case 0: {
                     Date date = (Date) msg.obj;
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     tv_complete_user_marriageDate.setText(df.format(date));
                 }
             }
@@ -110,11 +114,20 @@ public class CompleteUserInfoFragment extends BaseFragment {
         et_complete_user_age.setOnClickListener(this);
         tv_complete_user_marriageDate.setOnClickListener(this);
         et_complete_user_hometown.setOnClickListener(this);
+        tv_complete_user_save.setOnClickListener(this);
     }
 
+    //网络返回处理
     @Override
     public void enhanceOnResponse(String Tag, String json, HttpParams params) {
+        if (Tag == App.USER_REQ_DOUSERINFOUPDATE) {
+            MResult result = VolleyResponseUtils.getObject(json, MResult.class);
+            if (result.isSuccess()) {
 
+            } else {
+                Toast.makeText(getActivity(), result.getInfo(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -142,7 +155,7 @@ public class CompleteUserInfoFragment extends BaseFragment {
                         public void onDateChanged(DatePicker view, int year, int month, int dayOfMonth) {
                             Toast.makeText(getActivity(), year + " " +
                                     month + " " + dayOfMonth, Toast.LENGTH_SHORT).show();
-                            Date date = new Date(year - 1900, month, dayOfMonth);
+                            date = new Date(year - 1900, month, dayOfMonth);
                             Message msg = handler.obtainMessage();
                             msg.what = 0;
                             msg.obj = date;
@@ -166,6 +179,17 @@ public class CompleteUserInfoFragment extends BaseFragment {
         } else if (v == et_complete_user_hometown) {
             //TODO 选择家乡
 
+        } else if (v == tv_complete_user_save) {
+            //TODO 保存
+            UserRequestUtils.doUserInfoUpdate(getActivity(), TAG,
+                    et_complete_user_nickName.getText().toString(),
+                    et_complete_user_realName.getText().toString(),
+                    Integer.parseInt(et_complete_user_gender.getText().toString()),
+                    Integer.parseInt(et_complete_user_age.getText().toString()),
+                    date,
+                    et_complete_user_hometown.getText().toString(),
+                    et_complete_user_signature.getText().toString(),
+                    CompleteUserInfoFragment.this);
         }
     }
 
@@ -179,9 +203,11 @@ public class CompleteUserInfoFragment extends BaseFragment {
 
             String uploadHost = App.BASE_URL + App.USER_REQ_DOAVATARUPLOAD;
             RequestParams params = new RequestParams();
-            // params.addBodyParameter("msg",imgtxt.getText().toString());
             params.addBodyParameter(path, new File(path));
-            params.addBodyParameter("id", App.USER.getId() + "");
+//         TODO   params.addBodyParameter("id", App.USER.getId() + "");
+
+            params.addBodyParameter("id", 100000002+ "");
+
             uploadMethod(params, uploadHost);
         }
     }
@@ -213,7 +239,6 @@ public class CompleteUserInfoFragment extends BaseFragment {
                     ImageLoader.getInstance().displayImage(mResult.getReverse1(), iv_complete_user_avatar);
                     //TODO
                 }
-
             }
 
             @Override

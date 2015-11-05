@@ -7,7 +7,9 @@ import java.io.Serializable;
  */
 public class MResult implements Serializable {
 
+    //服务器返回是否成功
     private boolean success;
+
     //服务器返回的提示信息
     private String info;
 

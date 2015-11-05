@@ -152,11 +152,13 @@ public class RegisterFragment extends BaseFragment {
         iv_delete_input_password.setOnClickListener(this);
     }
 
+    //用户注册成功后跳转至修改个人信息界面
     @Override
     public void enhanceOnResponse(String Tag, String json, HttpParams params) {
         if (Tag == App.USER_REQ_DOUSERREGISTE) {
             MResult result = VolleyResponseUtils.getObject(json, MResult.class);
             if (result.isSuccess()) {
+                //获取服务器返回的用户id
                 App.USER.setId(Integer.getInteger(result.getReverse1()));
                 // 跳转到完善个人信息
                 CompleteUserInfoFragment userInfoFragment = new CompleteUserInfoFragment();

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 public class VolleyResponseUtils {
 
     /**
-     * onResponse中返回的JsonObjec
+     * onResponse中返回的JsonObject
      * @param jsonObject
      */
     public static String getTag(JSONObject jsonObject) {
