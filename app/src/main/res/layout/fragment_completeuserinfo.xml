@@ -97,11 +97,10 @@
                     android:text="年        龄："
                     android:textSize="18dp" />
 
-                <TextView
-                    android:id="@+id/tv_complete_user_age"
+                <EditText
+                    android:id="@+id/et_complete_user_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="请选择年龄"
                     android:textSize="18dp" />
             </LinearLayout>
 

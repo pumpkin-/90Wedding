@@ -79,13 +79,13 @@ public class SelectImagesFragment extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == 999) {
+        if(requestCode == 999 && data != null) {
             Intent intent = new Intent();
-            Bundle bundle = data.getExtras();
-            String path = bundle.getString("avatarPath");
-            intent.putExtra("avatarPath", path);
-            setResult(999, intent);
-            finish();
+                Bundle bundle = data.getExtras();
+                String path = bundle.getString("avatarPath");
+                intent.putExtra("avatarPath", path);
+                setResult(999, intent);
+                finish();
         }
     }
 
