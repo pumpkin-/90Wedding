@@ -1,0 +1,2 @@
+include ':app', ':smssdk', ':smssdk', ':smssdk', ':volley'
+include ':smssdk'

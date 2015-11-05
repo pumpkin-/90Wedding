@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 首页左侧菜单 -->
+    <drawable name="home_leftmenu_select">#f9a013</drawable>
+    <drawable name="home_leftmenu_white">#ffffff</drawable>
+
+    <color name="commen_text_color_1">#ff000000</color>
+    <!-- 黑色 -->
+    <color name="commen_text_color_2">#ff8a8a8a</color>
+    <!-- hint灰色背景 -->
+    <color name="commen_text_color_hint">#cccccc</color>
+    <!-- 灰色 -->
+    <color name="commen_text_color_3">#fff9a013</color>
+    <!-- 橘黄 -->
+    <color name="commen_text_color_4">#ffffffff</color>
+    <!-- 白色 -->
+    <color name="commen_text_color_5">#ff1db200</color>
+    <!-- 绿色 -->
+    <color name="commen_text_color_6">#ff9a0000</color>
+    <!-- 暗红色 -->
+    <color name="divider_color_1">#ffc5c5c5</color>
+    <!-- 灰色 -->
+
+    <!-- 全局字体颜色 -->
+    <color name="common_black">#ff000000</color>
+    <!-- 黑色 -->
+    <color name="common_light_black">#22000000</color>
+    <color name="common_gray">#ff8a8a8a</color>
+    <!-- 灰色 -->
+    <color name="common_light_gray">#ffc5c5c5</color>
+    <!-- 灰色 -->
+    <color name="common_light_gray_e3e3e3">#e3e3e3</color>
+    <!-- 浅灰色 -->
+    <color name="common_light_gray2">#ffe5e5e5</color>
+    <!-- 浅灰色 -->
+    <color name="common_orange">#fff9a013</color>
+    <!-- 橘黄 -->
+    <color name="common_orange1">#ffe9a013</color>
+    <!-- 橘黄 -->
+    <color name="common_orange2">#ffd9a013</color>
+    <!-- 橘黄 -->
+    <color name="common_orange3">#ffc9a013</color>
+    <!-- 橘黄 -->
+    <color name="common_white">#ffffffff</color>
+    <!-- 白色 -->
+    <color name="common_green">#ff1db200</color>
+    <!-- 绿色 -->
+    <color name="common_dark_red">#ff9a0000</color>
+    <!-- 暗红色 -->
+</resources>
