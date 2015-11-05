@@ -23,7 +23,7 @@ import java.util.List;
  * Created by hmy on 2015/10/27.
  * Upadte by Byron on 2015/10/31
  */
-public abstract class BaseFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, HttpResponse {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener, HttpResponse {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

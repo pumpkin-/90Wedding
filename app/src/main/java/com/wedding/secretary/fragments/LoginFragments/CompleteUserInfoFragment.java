@@ -5,14 +5,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lidroid.xutils.HttpUtils;
@@ -24,10 +23,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.wedding.secretary.R;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.domain.MResult;
@@ -55,12 +51,12 @@ public class CompleteUserInfoFragment extends BaseFragment {
     private EditText et_complete_user_realName;//真实姓名
     @ViewInject(R.id.et_complete_user_gender)
     private EditText et_complete_user_gender;//性别
-    @ViewInject(R.id.et_complete_user_age)
-    private EditText et_complete_user_age;//年龄
+    @ViewInject(R.id.tv_complete_user_age)
+    private TextView tv_complete_user_age;//年龄
     @ViewInject(R.id.et_complete_user_phoneNumber)
     private EditText et_complete_user_phoneNumber;//手机号
-    @ViewInject(R.id.et_complete_user_marriageDate)
-    private EditText et_complete_user_marriageDate;//结婚日期
+    @ViewInject(R.id.tv_complete_user_marriageDate)
+    private TextView tv_complete_user_marriageDate;//结婚日期
     @ViewInject(R.id.et_complete_user_hometown)
     private EditText et_complete_user_hometown;//家乡
     @ViewInject(R.id.et_complete_user_signature)
@@ -75,6 +71,8 @@ public class CompleteUserInfoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completeuserinfo, null);
         ViewUtils.inject(this, view);
+        View view1 = inflater.inflate(R.layout.dialog_date_picker, null);
+        ViewUtils.inject(this,view1);
         return view;
     }
 
@@ -88,8 +86,8 @@ public class CompleteUserInfoFragment extends BaseFragment {
     public void initListener() {
         iv_complete_user_avatar.setOnClickListener(this);
         et_complete_user_gender.setOnClickListener(this);
-        et_complete_user_age.setOnTouchListener(this);
-        et_complete_user_marriageDate.setOnTouchListener(this);
+        tv_complete_user_age.setOnClickListener(this);
+        tv_complete_user_marriageDate.setOnClickListener(this);
         et_complete_user_hometown.setOnClickListener(this);
     }
 
@@ -104,6 +102,17 @@ public class CompleteUserInfoFragment extends BaseFragment {
             //选择头像
             Intent intent = new Intent(getActivity(), SelectImagesFragment.class);
             startActivityForResult(intent, 998);
+
+        } else if (v == tv_complete_user_age) {
+            //TODO 选择年龄
+            StringBuffer sb=datePicker();
+            tv_complete_user_age.setText(sb);
+
+        } else if (v == tv_complete_user_marriageDate) {
+            //TODO 选择结婚日期
+            StringBuffer sb=datePicker();
+            tv_complete_user_marriageDate.setText(sb);
+
         } else if (v == et_complete_user_gender) {
             //TODO 选择性别
 
@@ -113,39 +122,9 @@ public class CompleteUserInfoFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (v == et_complete_user_age) {
-                //TODO 选择年龄
-                final int inType = et_complete_user_age.getInputType();
-                et_complete_user_age.setInputType(InputType.TYPE_NULL);
-                et_complete_user_age.onTouchEvent(event);
-                et_complete_user_age.setInputType(inType);
-                et_complete_user_age.setSelection(et_complete_user_age.getText().length());
-
-                StringBuffer sb = datePicker();
-                et_complete_user_age.setText(sb);
-
-            } else if (v == et_complete_user_marriageDate) {
-                //TODO 选择结婚日期
-                final int inType = et_complete_user_marriageDate.getInputType();
-                et_complete_user_marriageDate.setInputType(InputType.TYPE_NULL);
-                et_complete_user_marriageDate.onTouchEvent(event);
-                et_complete_user_marriageDate.setInputType(inType);
-                et_complete_user_marriageDate.setSelection(et_complete_user_marriageDate.getText().length());
-
-                StringBuffer sb = datePicker();
-                et_complete_user_marriageDate.setText(sb);
-            }
-        }
-        return true;
-    }
-
     //选择日期
     private StringBuffer datePicker() {
         final StringBuffer sb = new StringBuffer();
-        sb.append("");
 
         //设置Dialog布局
         View view = View.inflate(getActivity(), R.layout.dialog_date_picker, null);
@@ -173,7 +152,6 @@ public class CompleteUserInfoFragment extends BaseFragment {
         dialog.show();
         return sb;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
