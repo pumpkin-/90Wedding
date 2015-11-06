@@ -10,14 +10,17 @@ import com.wedding.secretary.fragments.LoginFragments.LoginFragment;
 /**
  * Created by hmy on 2015/10/27.
  */
-public class LoginActivity extends BaseFragmentActivity{
+public class LoginActivity extends BaseFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragments_container);
+        setContentView(R.layout.fragments_container_login);
+
+
         LoginFragment loginFragment = new LoginFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, loginFragment).commit();
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_container_login, loginFragment).commit();
     }
 
     @Override

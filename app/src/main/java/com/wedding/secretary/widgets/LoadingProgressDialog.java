@@ -9,11 +9,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.lidroid.xutils.ViewUtils;
 import com.wedding.secretary.R;
-import com.wedding.secretary.networks.HttpUtils;
 import com.wedding.secretary.utils.string.StringUtils;
 
 /**

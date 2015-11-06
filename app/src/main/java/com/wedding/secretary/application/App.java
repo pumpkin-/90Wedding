@@ -1,6 +1,8 @@
 package com.wedding.secretary.application;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -13,20 +15,26 @@ import com.wedding.secretary.domain.User;
  */
 public class App extends Application {
 
-    /**
-     * 用户信息
-     */
-    public static User USER;
-
     @Override
     public void onCreate() {
         super.onCreate();
         initImageLoader();
     }
 
-    /**
-     * 初始化ImageLoader相关配置
-     */
+    //用户信息
+    public static User USER;
+
+    //存储用户登录状态
+    public static SharedPreferences sharedPreferences = null;
+
+    public synchronized static SharedPreferences obtainSharedPreferences(Activity activity) {
+        if (sharedPreferences == null) {
+            sharedPreferences = activity.getSharedPreferences("wedding", Activity.MODE_PRIVATE);
+        }
+        return sharedPreferences;
+    }
+
+    //初始化ImageLoader相关配置
     private void initImageLoader() {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
@@ -38,13 +46,4 @@ public class App extends Application {
         ImageLoader.getInstance().init(config);
     }
 
-    public static final String BASE_URL = "http://192.168.0.102:8080/wedding";
-
-    /**
-     * 用户请求相关----------------------------------------------------
-     */
-    public static final String USER_REQ_DOUSERLOGIN = "/user/operation/userLogin.action";
-    public static final String USER_REQ_DOUSERREGISTE = "/user/operation/userRegiste.action";
-    public static final String USER_REQ_DOAVATARUPLOAD = "/file/operation/avatarUpload.action";
-    public static final String USER_REQ_DOUSERINFOUPDATE = "/user/operation//updateUserInfo.action";
 }

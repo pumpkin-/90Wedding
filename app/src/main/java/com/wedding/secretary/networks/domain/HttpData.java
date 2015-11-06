@@ -7,8 +7,8 @@ import java.io.Serializable;
  */
 public class HttpData implements Serializable {
 
-   private String json;
-   private HttpParams httpParams;
+    private String json;
+    private HttpParams httpParams;
 
     public HttpData() {
     }

@@ -1,8 +1,8 @@
 package com.wedding.secretary.fragments.LoginFragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.wedding.secretary.activities.MainActivity;
 import com.wedding.secretary.application.App;
+import com.wedding.secretary.application.AppData;
 import com.wedding.secretary.domain.LoginInfo;
 import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpParams;
@@ -24,8 +26,6 @@ import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.networks.ApiUtils.UserRequestUtils;
 import com.wedding.secretary.networks.VolleyResponseUtils;
 import com.wedding.secretary.utils.string.StringUtils;
-
-import org.json.JSONObject;
 
 /**
  * Created by hmy on 2015/10/28.
@@ -59,15 +59,6 @@ public class LoginFragment extends BaseFragment {
     private boolean hasUsername = false;
     private boolean hasPassword = false;
 
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            //TODO
-            Toast.makeText(getActivity(),((JSONObject)msg.obj).toString(),Toast.LENGTH_SHORT).show();
-        }
-    };
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, null);
@@ -86,7 +77,6 @@ public class LoginFragment extends BaseFragment {
     public void initListener() {
         tv_register.setOnClickListener(this);
         tv_login.setOnClickListener(this);
-        tv_login.setClickable(true);
         tv_forget_password.setOnClickListener(this);
         iv_delete_login_username.setOnClickListener(this);
         iv_delete_login_password.setOnClickListener(this);
@@ -96,47 +86,32 @@ public class LoginFragment extends BaseFragment {
     public void onClick(View v) {
         if (v == tv_register) {
             //注册
-//            RegisterFragment registerFragment = new RegisterFragment();
-//            getActivity().getSupportFragmentManager().beginTransaction().
-//                    replace(R.id.fragment_container, registerFragment).
-//                    addToBackStack(LoginFragment.class.getSimpleName()).commit();
-
-            // TODO 跳转到完善个人信息
-            CompleteUserInfoFragment userInfoFragment = new CompleteUserInfoFragment();
+            RegisterFragment registerFragment = new RegisterFragment();
             getActivity().getSupportFragmentManager().beginTransaction().
-                    replace(R.id.fragment_container, userInfoFragment).
-                    addToBackStack(RegisterFragment.class.getSimpleName()).commit();
-        } else {
-            if (v == tv_login) {
-                //登录
-                UserRequestUtils.doUserLogin(getActivity(),TAG, et_login_username.getText().toString(),et_login_password.getText().toString(),this);
+                    replace(R.id.fragment_container_login, registerFragment).
+                    addToBackStack(LoginFragment.class.getSimpleName()).commit();
 
-            } else if (v == tv_forget_password) {
-                //忘记密码
-                ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        replace(R.id.fragment_container, resetPasswordFragment).
-                        addToBackStack(LoginFragment.class.getSimpleName()).commit();
-            } else if (v == iv_delete_login_username) {
-                //删除输入的账号内容
-                et_login_username.setText("");
-            } else if (v == iv_delete_login_password) {
-                //删除输入的密码内容
-                et_login_password.setText("");
-            }
+        } else if (v == tv_login) {
+            //登录
+            UserRequestUtils.doUserLogin(getActivity(), TAG, et_login_username.getText().toString(), et_login_password.getText().toString(), this);
+
+        } else if (v == tv_forget_password) {
+            //忘记密码
+            ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().
+                    replace(R.id.fragment_container_login, resetPasswordFragment).
+                    addToBackStack(LoginFragment.class.getSimpleName()).commit();
+
+        } else if (v == iv_delete_login_username) {
+            //删除输入的账号内容
+            et_login_username.setText("");
+        } else if (v == iv_delete_login_password) {
+            //删除输入的密码内容
+            et_login_password.setText("");
         }
     }
 
     private void initComponent() {
-        if (!StringUtils.isEmpty(et_login_username.getText().toString())) {
-            hasUsername = true;
-            iv_delete_login_username.setVisibility(View.VISIBLE);
-        }
-        if (!StringUtils.isEmpty(et_login_password.getText().toString())) {
-            hasPassword = true;
-            iv_delete_login_password.setVisibility(View.VISIBLE);
-        }
-
         //登录
         et_login_username.addTextChangedListener(new TextWatcher() {
             @Override
@@ -205,17 +180,30 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     public void enhanceOnResponse(String Tag, String json, HttpParams params) {
-        //登录
-        if(Tag.equals( App.USER_REQ_DOUSERLOGIN)) {
+        //登录成功
+        if (Tag.equals(AppData.USER_REQ_DOUSERLOGIN)) {
             LoginInfo loginInfo = VolleyResponseUtils.getObject(json, LoginInfo.class);
             MResult mResult = loginInfo.getmResult();
-            if(mResult.isSuccess()) {
+            if (mResult.isSuccess()) {
                 //保存到全局User类中
                 App.USER = loginInfo.getUser();
 
-                Toast.makeText(getActivity(), "登陆成功: " + App.USER, Toast.LENGTH_SHORT).show();
+                //将用户登陆成功的状态保存到SharedPreferences
+                //TODO 判断当前用户id是否存在  多用户情况
+                SharedPreferences sharedPreferences = App.obtainSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                //login —— 0：未登录过  1：登录过
+                editor.putInt("id", App.USER.getId());
+                editor.putInt("autoLogin", AppData.AUTOLOGIN_YES);
+                editor.commit();
+
+                //跳转到首页
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+
             } else {
-                Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getActivity(), mResult.getInfo(), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -4,10 +4,11 @@ import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.wedding.secretary.application.App;
+import com.wedding.secretary.application.AppData;
 import com.wedding.secretary.domain.User;
 import com.wedding.secretary.networks.domain.HttpParams;
-import com.wedding.secretary.networks.HttpResponse;
-import com.wedding.secretary.networks.HttpUtils;
+import com.wedding.secretary.networks.VolleyResponse;
+import com.wedding.secretary.networks.VolleyRequestUtils;
 import com.wedding.secretary.utils.string.StringUtils;
 
 import java.util.Date;
@@ -24,17 +25,17 @@ public class UserRequestUtils {
      * @param reqPageName
      * @param username
      * @param password
-     * @param httpResponse
+     * @param volleyResponse
      */
-    public static void doUserLogin(Activity activity, String reqPageName, String username, String password, HttpResponse httpResponse) {
+    public static void doUserLogin(Activity activity, String reqPageName, String username, String password, VolleyResponse volleyResponse) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(StringUtils.getMD5Str(password));
 
         String json = JSON.toJSONString(user);
 
-        HttpParams httpParams = new HttpParams(reqPageName, App.USER_REQ_DOUSERLOGIN);
-        HttpUtils.httpPost(activity, httpParams, json, httpResponse);
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUSERLOGIN);
+        VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
     }
 
     /**
@@ -44,9 +45,9 @@ public class UserRequestUtils {
      * @param reqPageName
      * @param phoneNumber
      * @param password
-     * @param httpResponse
+     * @param volleyResponse
      */
-    public static void doUserRegiste(Activity activity, String reqPageName, String phoneNumber, String password, HttpResponse httpResponse) {
+    public static void doUserRegiste(Activity activity, String reqPageName, String phoneNumber, String password, VolleyResponse volleyResponse) {
 
         User user = new User();
         user.setUsername(phoneNumber);
@@ -57,8 +58,8 @@ public class UserRequestUtils {
 
         String json = JSON.toJSONString(user);
 
-        HttpParams httpParams = new HttpParams(reqPageName, App.USER_REQ_DOUSERREGISTE);
-        HttpUtils.httpPost(activity, httpParams, json, httpResponse);
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUSERREGISTE);
+        VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
     }
 
     /**
@@ -66,6 +67,7 @@ public class UserRequestUtils {
      *
      * @param activity
      * @param reqPageName
+     * @param id
      * @param nickName
      * @param realName
      * @param gender
@@ -73,14 +75,15 @@ public class UserRequestUtils {
      * @param marriageDate
      * @param hometown
      * @param signature
-     * @param httpResponse
+     * @param volleyResponse
      */
-    public static void doUserInfoUpdate(Activity activity, String reqPageName, String nickName, String realName, Integer gender, Integer age, Date marriageDate, String hometown, String signature, HttpResponse httpResponse) {
+    public static void doUserInfoUpdate(Activity activity, String reqPageName, Integer id, String nickName, String realName, Integer gender, Integer age, Date marriageDate, String hometown, String signature, VolleyResponse volleyResponse) {
 
-        User user=App.USER;
-        if(user==null){
-            user=new User();
+        User user = App.USER;
+        if (user == null) {
+            user = new User();
         }
+        user.setId(id);
         user.setNickName(nickName);
         user.setRealName(realName);
         user.setGender(gender);
@@ -91,7 +94,24 @@ public class UserRequestUtils {
 
         String json = JSON.toJSONString(user);
 
-        HttpParams httpParams = new HttpParams(reqPageName, App.USER_REQ_DOUSERINFOUPDATE);
-        HttpUtils.httpPost(activity, httpParams, json, httpResponse);
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUSERINFOUPDATE);
+        VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
     }
+
+    /**
+     * 获取用户信息
+     *
+     * @param activity
+     * @param reqPageName
+     * @param id
+     * @param volleyResponse
+     */
+    public static void doGetUserInfo(Activity activity, String reqPageName, Integer id, VolleyResponse volleyResponse) {
+
+        String json = JSON.toJSONString(id);
+
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOGETUSERINFO);
+        VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
+    }
+
 }

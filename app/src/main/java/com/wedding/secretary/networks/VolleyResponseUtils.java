@@ -12,28 +12,8 @@ import org.json.JSONObject;
 public class VolleyResponseUtils {
 
     /**
-     * onResponse中返回的JsonObject
-     * @param jsonObject
-     */
-    public static String getTag(JSONObject jsonObject) {
-        HttpData data = JSON.parseObject(jsonObject.toString(), HttpData.class);
-        return data.getHttpParams().methodTag;
-    }
-
-    /**
-     * 获取onResponse中返回的对象
-     * @param json
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public static <T>T getObject(String json, Class<T> clazz) {
-        T data = JSON.parseObject(json, clazz);
-        return data;
-    }
-
-    /**
-     * 获取HttpData
+     * 获取onResponse中返回的HttpData
+     *
      * @param jsonObject
      * @return
      */
@@ -43,20 +23,35 @@ public class VolleyResponseUtils {
     }
 
     /**
-     * 获取onResponse中返回的对象
+     * 解析HttpData中的json
+     *
      * @param jsonObject
      * @param clazz
      * @param <T>
      * @return
      */
-    public static <T>T getObject(JSONObject jsonObject, Class<T> clazz) {
+    public static <T> T getObject(JSONObject jsonObject, Class<T> clazz) {
         HttpData data = JSON.parseObject(jsonObject.toString(), HttpData.class);
         T t = JSON.parseObject(data.getJson(), clazz);
         return t;
     }
 
     /**
-     * 获取请求参数
+     * 解析json
+     *
+     * @param json
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T getObject(String json, Class<T> clazz) {
+        T data = JSON.parseObject(json, clazz);
+        return data;
+    }
+
+    /**
+     * 获取HttpData中的HttpParams
+     *
      * @param jsonObject
      * @return
      */
@@ -65,4 +60,13 @@ public class VolleyResponseUtils {
         return data.getHttpParams();
     }
 
+    /**
+     * 获取HttpParams中的methodTag
+     *
+     * @param jsonObject
+     */
+    public static String getTag(JSONObject jsonObject) {
+        HttpData data = JSON.parseObject(jsonObject.toString(), HttpData.class);
+        return data.getHttpParams().methodTag;
+    }
 }

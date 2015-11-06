@@ -18,6 +18,7 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.wedding.secretary.R;
 import com.wedding.secretary.application.App;
+import com.wedding.secretary.application.AppData;
 import com.wedding.secretary.application.AppSDKConst;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.domain.MResult;
@@ -155,15 +156,15 @@ public class RegisterFragment extends BaseFragment {
     //用户注册成功后跳转至修改个人信息界面
     @Override
     public void enhanceOnResponse(String Tag, String json, HttpParams params) {
-        if (Tag == App.USER_REQ_DOUSERREGISTE) {
+        if (Tag.equals(AppData.USER_REQ_DOUSERREGISTE)) {
             MResult result = VolleyResponseUtils.getObject(json, MResult.class);
             if (result.isSuccess()) {
                 //获取服务器返回的用户id
                 App.USER.setId(Integer.getInteger(result.getReverse1()));
                 // 跳转到完善个人信息
-                CompleteUserInfoFragment userInfoFragment = new CompleteUserInfoFragment();
+                CompleteUserInfoFragment completeUserInfoFragment = new CompleteUserInfoFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().
-                        replace(R.id.fragment_container, userInfoFragment).
+                        replace(R.id.fragment_container_login, completeUserInfoFragment).
                         addToBackStack(RegisterFragment.class.getSimpleName()).commit();
             } else {
                 Toast.makeText(getActivity(), result.getInfo(), Toast.LENGTH_SHORT).show();
@@ -294,7 +295,7 @@ public class RegisterFragment extends BaseFragment {
         });
     }
 
-    // 检查信息的完整性（是否显示注册按钮）
+    // 点击注册时检查信息的完整性
     private boolean infoIntegrityCheck() {
         if (isMobileNO(et_input_phone_number.getText().toString())) { // 手机号
             if (et_input_password.getText().length() <= 0) { // 密码

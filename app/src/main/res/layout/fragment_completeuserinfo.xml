@@ -14,18 +14,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:gravity="center"
                 android:padding="10dp">
 
                 <com.wedding.secretary.utils.images.RoundImageView
                     android:id="@+id/iv_complete_user_avatar"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:src="@mipmap/ic_launcher" />
-            </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pb_img_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateDrawable="@drawable/loading_anim"
+                    android:visibility="gone" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +90,6 @@
                     android:id="@+id/et_complete_user_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="男"
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -120,6 +128,7 @@
                     android:id="@+id/et_complete_user_phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:textSize="18dp" />
             </LinearLayout>
 
