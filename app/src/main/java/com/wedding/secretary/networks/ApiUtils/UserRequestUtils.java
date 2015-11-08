@@ -14,6 +14,7 @@ import com.wedding.secretary.utils.string.StringUtils;
 import java.util.Date;
 
 /**
+ * 用户请求
  * Created by hmy on 2015/10/30.
  */
 public class UserRequestUtils {
@@ -94,7 +95,7 @@ public class UserRequestUtils {
 
         String json = JSON.toJSONString(user);
 
-        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUSERINFOUPDATE);
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUPDATEUSERINFO);
         VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
     }
 

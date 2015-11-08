@@ -97,7 +97,7 @@ public class ImageChildAdapter extends BaseAdapter {
                 }
                 mSelectMap.put(position, isChecked);
 
-                if(mSelectMap.size() == 1) {
+                if (mSelectMap.size() == 1) {
                     //TODO
                     Intent intent = new Intent();
                     intent.putExtra("avatarPath", list.get(position));
@@ -167,6 +167,5 @@ public class ImageChildAdapter extends BaseAdapter {
         public MyImageView mImageView;
         public CheckBox mCheckBox;
     }
-
 
 }

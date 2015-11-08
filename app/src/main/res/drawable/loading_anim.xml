@@ -14,3 +14,5 @@
     <item android:drawable="@drawable/loading_anim11" android:duration="200" />
     <item android:drawable="@drawable/loading_anim12" android:duration="200" />
 </animation-list>
+
+

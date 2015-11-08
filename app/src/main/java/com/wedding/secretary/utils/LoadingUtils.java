@@ -1,6 +1,6 @@
-package com.wedding.secretary.application;
+package com.wedding.secretary.utils;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 
 import com.wedding.secretary.widgets.LoadingProgressDialog;
@@ -14,11 +14,12 @@ public class LoadingUtils {
 
     /**
      * 显示加载框
+     *
      * @param msg
      */
-    public static void showLoadingDialog(Activity activity, String msg) {
-        if(loadingProgressDialog == null) {
-            loadingProgressDialog = new LoadingProgressDialog(activity);
+    public synchronized static void showLoadingDialog(Context context, String msg) {
+        if (loadingProgressDialog == null) {
+            loadingProgressDialog = new LoadingProgressDialog(context);
             loadingProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
@@ -29,12 +30,13 @@ public class LoadingUtils {
         loadingProgressDialog.setMessage(msg);
         loadingProgressDialog.show();
     }
+
     /**
      * 显示加载框
      */
-    public static void showLoadingDialog(Activity activity) {
-        if(loadingProgressDialog == null) {
-            loadingProgressDialog = new LoadingProgressDialog(activity);
+    public synchronized static void showLoadingDialog(Context context) {
+        if (loadingProgressDialog == null) {
+            loadingProgressDialog = new LoadingProgressDialog(context);
             loadingProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
@@ -50,7 +52,7 @@ public class LoadingUtils {
      * 关闭加载框
      */
     public static void dissmissLoadingDialog() {
-        if(loadingProgressDialog != null && loadingProgressDialog.isShowing()) {
+        if (loadingProgressDialog != null && loadingProgressDialog.isShowing()) {
             loadingProgressDialog.dismiss();
         }
     }

@@ -1,6 +1,5 @@
 package com.wedding.secretary.base;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -10,7 +9,6 @@ import com.wedding.secretary.widgets.LoadingProgressDialog;
 /**
  * Created by hmy on 2015/10/27.
  * Update By Byron on 2015/10/31
- *
  */
 public abstract class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -19,8 +17,22 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements V
         super.onCreate(savedInstanceState);
     }
 
+    //初始化控件监听器
     public abstract void initListener();
 
-    private LoadingProgressDialog loadingProgressDialog;
+    //TODO
+//    private LoadingProgressDialog loadingProgressDialog;
+
+    /** 初始化ActionBar */
+//    public void initJabActionBar() {
+//        // 设置ActionBar样式
+//        android.app.ActionBar actionbar = getActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(false);
+//        actionbar.setDisplayShowHomeEnabled(false);
+//        actionbar.setTitle("动态");
+//        // 设置actionbar的背景图
+//        actionbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+//
+//    }
 
 }

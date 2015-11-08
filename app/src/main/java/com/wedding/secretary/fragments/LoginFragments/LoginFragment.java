@@ -28,6 +28,7 @@ import com.wedding.secretary.networks.VolleyResponseUtils;
 import com.wedding.secretary.utils.string.StringUtils;
 
 /**
+ * 用户登录
  * Created by hmy on 2015/10/28.
  */
 public class LoginFragment extends BaseFragment {
@@ -87,9 +88,11 @@ public class LoginFragment extends BaseFragment {
         if (v == tv_register) {
             //注册
             RegisterFragment registerFragment = new RegisterFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.faded_in, R.anim.faded_out).
                     replace(R.id.fragment_container_login, registerFragment).
-                    addToBackStack(LoginFragment.class.getSimpleName()).commit();
+                    addToBackStack(LoginFragment.class.getSimpleName())
+                    .commit();
 
         } else if (v == tv_login) {
             //登录

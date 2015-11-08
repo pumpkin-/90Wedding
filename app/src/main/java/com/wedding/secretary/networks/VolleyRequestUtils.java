@@ -2,6 +2,8 @@ package com.wedding.secretary.networks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,9 +15,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.wedding.secretary.application.App;
+import com.wedding.secretary.activities.MainActivity;
 import com.wedding.secretary.application.AppData;
-import com.wedding.secretary.application.LoadingUtils;
+import com.wedding.secretary.utils.LoadingUtils;
 import com.wedding.secretary.networks.domain.HttpData;
 import com.wedding.secretary.networks.domain.HttpParams;
 import com.wedding.secretary.utils.log.WeddingLog;
@@ -62,16 +64,21 @@ public class VolleyRequestUtils {
     public static void httpPost(final Activity activity, HttpParams httpParams, String json, VolleyResponse volleyResponse) {
         final String url = AppData.BASE_URL + httpParams.methodTag;
 
+        //当前网络不可用
+        if (!isNetworkAvailable(activity)) {
+            return;
+        }
+
         Map<String, List<String>> requestMap = VolleyRequestUtils.obtainRequestQueueMap();
 
         //防止方法重复提交
         if (!StringUtils.isEmpty(httpParams.reqPageName)) {
             List<String> reqList = requestMap.get(httpParams.reqPageName);
-            //请求页面不为空且请求方法存在，直接返回
+            //请求方法链表不为空且当前请求方法存在，直接返回
             if (reqList != null && reqList.contains(httpParams.methodTag)) {
                 return;
             }
-            //请求页面为空，新建请求页面并存入请求方法
+            //请求方法链表为空，新建请求列表并存入当前请求方法
             if (reqList == null) {
                 List<String> reqs = new LinkedList<String>();
                 reqs.add(httpParams.methodTag);
@@ -81,7 +88,7 @@ public class VolleyRequestUtils {
                 reqs.add(httpParams.methodTag);
                 requestMap.put(httpParams.reqPageName, reqs);
             }
-            LoadingUtils.showLoadingDialog(activity);
+            // LoadingUtils.showLoadingDialog(activity);
         }
 
         HttpData httpData = new HttpData();
@@ -99,9 +106,15 @@ public class VolleyRequestUtils {
         Request request = new JsonObjectRequest(Request.Method.POST, url, jsonObject, volleyResponse, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+
                 Log.e(activity.getClass().getSimpleName(), "response : " + volleyError.toString());
+
                 LoadingUtils.dissmissLoadingDialog();
                 requestQueueMap.clear();
+                if (activity.getClass().getSimpleName().equals("SplashActivity")) {
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    activity.startActivity(intent);
+                }
                 WeddingLog.w(url);
                 WeddingLog.w(jsonString);
                 Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
@@ -111,7 +124,7 @@ public class VolleyRequestUtils {
         WeddingLog.w(jsonString);
         request.setRetryPolicy(new DefaultRetryPolicy(5 * 1000, 1, 1.0f));
         mQueue.add(request);
-        mQueue.start();
+        // mQueue.start();
     }
 
     /**
@@ -151,4 +164,17 @@ public class VolleyRequestUtils {
         return jsonObject;
     }
 
+    /**
+     * 判断当前网络状况
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null && cm.getActiveNetworkInfo() != null) {
+            return cm.getActiveNetworkInfo().isAvailable();
+        }
+        return false;
+    }
 }

@@ -1,14 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="确定"
-        android:textSize="30dp"
-        />
+        android:textSize="30dp" />
 
     <GridView
         android:id="@+id/gv_show_images"
@@ -23,6 +22,5 @@
         android:numColumns="auto_fit"
         android:padding="5dip"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="5dip" >
-    </GridView>
+        android:verticalSpacing="5dip"></GridView>
 </RelativeLayout>

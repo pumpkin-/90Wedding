@@ -13,20 +13,22 @@ import com.wedding.secretary.R;
 import com.wedding.secretary.utils.string.StringUtils;
 
 /**
+ * 缓冲圈
  * Created by Byron on 2015/10/31.
  */
-public class LoadingProgressDialog extends Dialog{
+public class LoadingProgressDialog extends Dialog {
 
     TextView textView;
     ImageView img;
     Context context;
+
     public LoadingProgressDialog(Context context) {
         super(context, R.style.loadingDialog);
         this.context = context;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.widget_loading);
 
-        img = (ImageView)findViewById(R.id.loding_img);
+        img = (ImageView) findViewById(R.id.loding_img);
         textView = (TextView) findViewById(R.id.loading_tv);
 
         AnimationDrawable animationDrawable = (AnimationDrawable) img.getBackground();
@@ -45,7 +47,7 @@ public class LoadingProgressDialog extends Dialog{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             super.dismiss();
             return true;
         } else {
@@ -55,13 +57,14 @@ public class LoadingProgressDialog extends Dialog{
 
     /**
      * 给加载框设置消息
+     *
      * @param msg
      */
     public void setMessage(String msg) {
-        if(StringUtils.isEmpty(msg)){
+        if (StringUtils.isEmpty(msg)) {
             textView.setText("");
             textView.setVisibility(View.GONE);
-        } else{
+        } else {
             textView.setText(msg);
             textView.setVisibility(View.VISIBLE);
         }

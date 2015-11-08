@@ -1,28 +1,29 @@
-package com.wedding.secretary.fragments.LoginFragments;
+package com.wedding.secretary.fragments.MainFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.lidroid.xutils.ViewUtils;
-import com.wedding.secretary.R;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.networks.domain.HttpParams;
 
 /**
- * 重置密码
- * Created by hmy on 2015/10/27.
+ * 社区
+ * Created by hmy on 2015/11/7.
  */
-public class ResetPasswordFragment extends BaseFragment {
-
-    private static String TAG = ResetPasswordFragment.class.getSimpleName();
+public class CommunityFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_resetpassword, null);
-        ViewUtils.inject(this, view);
+
         initListener();
+
+        TextView view = new TextView(getActivity());
+        view.setText("社区");
+        view.setTextSize(40);
+
         return view;
     }
 

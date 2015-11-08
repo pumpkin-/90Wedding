@@ -34,6 +34,7 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 /**
+ * 用户注册
  * Created by hmy on 2015/10/27.
  */
 public class RegisterFragment extends BaseFragment {
@@ -72,15 +73,31 @@ public class RegisterFragment extends BaseFragment {
     private final String TIP_GET_VERIFY_CODE = "获取验证码";
     private final String TIP_GET_VERIFY_CODE_SUCCESS = "验证码已发送到您的手机，请注意查收";
 
+    //智能短信验证
+    private boolean isPassSmartVerify = false;
+
     //短信验证 -- 该handler在子线程中
     private EventHandler eh = new EventHandler() {
         @Override
         public void afterEvent(int event, int result, Object data) {
+
             if (result == SMSSDK.RESULT_COMPLETE) {
                 //回调完成
-                if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    //提交验证码成功
-                    Log.d(TAG, "提交验证码成功 -- " + result + "  " + data.toString());
+                if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                    isPassSmartVerify = (Boolean) data;
+                    //智能验证
+                    if (isPassSmartVerify) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                UserRequestUtils.doUserRegiste(getActivity(), TAG,
+                                        et_input_phone_number.getText().toString(),
+                                        et_input_password.getText().toString(), RegisterFragment.this);
+                            }
+                        });
+                    }
+                } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                    //短信验证
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -89,23 +106,16 @@ public class RegisterFragment extends BaseFragment {
                                     et_input_password.getText().toString(), RegisterFragment.this);
                         }
                     });
-                } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    //获取验证码成功
-                    Log.d(TAG, "获取验证码成功 -- " + result + "  " + data.toString());
-                } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
-                    //返回支持发送验证码的国家列表
                 }
-            } else {
-                if (result == SMSSDK.RESULT_ERROR) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), "验证不成功", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                ((Throwable) data).printStackTrace();
+            } else if (result == SMSSDK.RESULT_ERROR) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), "验证不成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+            ((Throwable) data).printStackTrace();
         }
     };
 
@@ -153,17 +163,25 @@ public class RegisterFragment extends BaseFragment {
         iv_delete_input_password.setOnClickListener(this);
     }
 
-    //用户注册成功后跳转至修改个人信息界面
+    /**
+     * 服务器响应处理
+     *
+     * @param Tag
+     * @param json
+     * @param params
+     */
     @Override
     public void enhanceOnResponse(String Tag, String json, HttpParams params) {
+        //用户注册成功后跳转至修改个人信息界面
         if (Tag.equals(AppData.USER_REQ_DOUSERREGISTE)) {
             MResult result = VolleyResponseUtils.getObject(json, MResult.class);
             if (result.isSuccess()) {
                 //获取服务器返回的用户id
                 App.USER.setId(Integer.getInteger(result.getReverse1()));
-                // 跳转到完善个人信息
+                // 跳转至修改个人信息界面
                 CompleteUserInfoFragment completeUserInfoFragment = new CompleteUserInfoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.faded_in, R.anim.faded_out).
                         replace(R.id.fragment_container_login, completeUserInfoFragment).
                         addToBackStack(RegisterFragment.class.getSimpleName()).commit();
             } else {
@@ -189,7 +207,13 @@ public class RegisterFragment extends BaseFragment {
             //注册
             //发送手机号和验证码到服务器
             if (infoIntegrityCheck()) {
-                SMSSDK.submitVerificationCode("86", et_input_phone_number.getText().toString(), et_input_verify_code.getText().toString());
+                if (isPassSmartVerify) {
+                    UserRequestUtils.doUserRegiste(getActivity(), TAG,
+                            et_input_phone_number.getText().toString(),
+                            et_input_password.getText().toString(), RegisterFragment.this);
+                } else {
+                    SMSSDK.submitVerificationCode("86", et_input_phone_number.getText().toString(), et_input_verify_code.getText().toString());
+                }
             }
 
         } else if (v == iv_delete_input_phone_number) {

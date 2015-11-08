@@ -2,6 +2,7 @@ package com.wedding.secretary.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -11,6 +12,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.wedding.secretary.domain.User;
 
 /**
+ * 程序初始化
  * Created by hmy on 2015/10/30.
  */
 public class App extends Application {
@@ -18,7 +20,18 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         initImageLoader();
+    }
+
+    private static App app;
+
+    public static App getApp() {
+        return app;
+    }
+
+    public static Context getAppContext() {
+        return getApp().getApplicationContext();
     }
 
     //用户信息

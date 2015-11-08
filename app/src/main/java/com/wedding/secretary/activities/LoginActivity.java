@@ -17,10 +17,11 @@ public class LoginActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragments_container_login);
 
-
         LoginFragment loginFragment = new LoginFragment();
         getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_container_login, loginFragment).commit();
+                setCustomAnimations(R.anim.faded_in, R.anim.faded_out).
+                replace(R.id.fragment_container_login, loginFragment)
+                .commit();
     }
 
     @Override

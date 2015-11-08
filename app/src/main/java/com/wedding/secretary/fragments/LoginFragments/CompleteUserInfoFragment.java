@@ -39,6 +39,7 @@ import com.wedding.secretary.networks.VolleyResponseUtils;
 import com.wedding.secretary.networks.domain.HttpData;
 import com.wedding.secretary.networks.domain.HttpParams;
 import com.wedding.secretary.utils.images.SelectImagesFragment;
+import com.wedding.secretary.utils.string.StringUtils;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -47,6 +48,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * 用户信息
  * Created by hmy on 2015/11/4.
  */
 public class CompleteUserInfoFragment extends BaseFragment {
@@ -157,16 +159,22 @@ public class CompleteUserInfoFragment extends BaseFragment {
         tv_complete_user_save.setOnClickListener(this);
     }
 
-    //网络返回处理
+    /**
+     * 服务器响应处理
+     *
+     * @param Tag
+     * @param json
+     * @param params
+     */
     @Override
     public void enhanceOnResponse(String Tag, String json, HttpParams params) {
-        if (Tag.equals(AppData.USER_REQ_DOUSERINFOUPDATE)) {
+        if (Tag.equals(AppData.USER_REQ_DOUPDATEUSERINFO)) {
             User user = VolleyResponseUtils.getObject(json, User.class);
             if (user != null) {
                 App.USER = user;
                 initUserInfo();
             } else {
-                Toast.makeText(getActivity(), "修改用户信息失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "修改个人信息失败", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -224,13 +232,21 @@ public class CompleteUserInfoFragment extends BaseFragment {
 
         } else if (v == tv_complete_user_save) {
             //TODO 保存
+            String gender = et_complete_user_gender.getText().toString();
+            String age = et_complete_user_age.getText().toString();
+            if (StringUtils.isEmpty(gender)) {
+                gender = "0";
+            }
+            if (StringUtils.isEmpty(age)) {
+                age = "0";
+            }
             if (App.USER.getId() != null) {
                 UserRequestUtils.doUserInfoUpdate(getActivity(), TAG,
                         App.USER.getId(),
                         et_complete_user_nickName.getText().toString(),
                         et_complete_user_realName.getText().toString(),
-                        Integer.parseInt(et_complete_user_gender.getText().toString()),
-                        Integer.parseInt(et_complete_user_age.getText().toString()),
+                        Integer.parseInt(gender),
+                        Integer.parseInt(age),
                         date,
                         et_complete_user_hometown.getText().toString(),
                         et_complete_user_signature.getText().toString(),
@@ -242,23 +258,28 @@ public class CompleteUserInfoFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //上传头像
         if (requestCode == 998 && data != null) {
             Bundle bundle = data.getExtras();
             String path = bundle.getString("avatarPath");
             http = new HttpUtils();
 
             String uploadHost = AppData.BASE_URL + AppData.USER_REQ_DOAVATARUPLOAD;
-            RequestParams params = new RequestParams();
-            params.addBodyParameter(path, new File(path));
-
-            //TODO
-            params.addBodyParameter("id", App.USER.getId() + "");
-            uploadMethod(params, uploadHost);
+            RequestParams requestParams = new RequestParams();
+            requestParams.addBodyParameter(path, new File(path));
+            requestParams.addBodyParameter("id", App.USER.getId() + "");
+            uploadMethod(requestParams, uploadHost);
         }
     }
 
-    public void uploadMethod(final RequestParams params, final String uploadHost) {
-        http.send(HttpRequest.HttpMethod.POST, uploadHost, params, new RequestCallBack<String>() {
+    /**
+     * 上传头像
+     *
+     * @param requestParams
+     * @param uploadHost
+     */
+    public void uploadMethod(final RequestParams requestParams, final String uploadHost) {
+        http.send(HttpRequest.HttpMethod.POST, uploadHost, requestParams, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pb_img_upload.setVisibility(View.VISIBLE);
@@ -267,23 +288,22 @@ public class CompleteUserInfoFragment extends BaseFragment {
             @Override
             public void onLoading(long total, long current, boolean isUploading) {
                 if (isUploading) {
-                    // msgTextview.setText("upload: " + current + "/"+ total);
+
                 } else {
-                    // msgTextview.setText("reply: " + current + "/"+ total);
+
                 }
             }
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                // msgTextview.setText("reply: " + responseInfo.result);
                 LogUtils.d(responseInfo.result);
                 LogUtils.d(responseInfo.reasonPhrase);
 
                 HttpData httpData = JSON.parseObject(responseInfo.result, HttpData.class);
                 MResult mResult = VolleyResponseUtils.getObject(httpData.getJson(), MResult.class);
                 if (mResult.isSuccess()) {
+                    //设置头像
                     ImageLoader.getInstance().displayImage(mResult.getReverse1(), iv_complete_user_avatar);
-                    //TODO
                 }
                 pb_img_upload.setVisibility(View.GONE);
             }

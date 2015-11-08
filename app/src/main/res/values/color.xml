@@ -2,5 +2,16 @@
 
     <!-- 透明 -->
     <color name="transparent">#00ffffff</color>
+    <!-- 白色 -->
+    <color name="white">#ffffffff</color>
+
+    <!-- 黑色 -->
+    <color name="black">#ff1f1f1f</color>
+
+    <!-- 粉色 -->
+    <color name="pink">#ffff1f1f</color>
+
+    <!-- 灰色 -->
+    <color name="grey">#ffb8b8b8</color>
 
 </resources>

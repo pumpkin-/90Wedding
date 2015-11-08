@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.wedding.secretary.application.LoadingUtils;
+import com.wedding.secretary.utils.LoadingUtils;
 import com.wedding.secretary.networks.VolleyRequestUtils;
 import com.wedding.secretary.networks.VolleyResponse;
 import com.wedding.secretary.networks.VolleyResponseUtils;
@@ -27,35 +27,44 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         super.onCreate(savedInstanceState);
     }
 
+    //初始化控件监听器
     protected abstract void initListener();
 
     /**
-     * 增强response方法
+     * 增强onResponse方法
      *
      * @param Tag
      * @param json
-     * @param params
+     * @param httpParams
      */
-    public abstract void enhanceOnResponse(String Tag, String json, HttpParams params);
+    public abstract void enhanceOnResponse(String Tag, String json, HttpParams httpParams);
 
+    /**
+     * 服务器响应
+     *
+     * @param jsonObject
+     */
     @Override
     public void onResponse(JSONObject jsonObject) {
-        WeddingLog.w(jsonObject.toString());
+        WeddingLog.e(jsonObject.toString());
         if (jsonObject == null) {
             Toast.makeText(this, "请求服务器失败", Toast.LENGTH_SHORT).show();
         } else {
+            //缓冲圈处理
             HttpParams httpParams = VolleyResponseUtils.getHttpParams(jsonObject);
-            //map中请求页面不为空
+            //若请求页面不为空
             if (!StringUtils.isEmpty(httpParams.reqPageName)) {
-                //获取map中请求页面，将链表中请求成功的方法移除
+                //将当前请求页面的请求方法链表中的当前请求方法移除
                 List<String> reqlist = VolleyRequestUtils.obtainRequestQueueMap().get(httpParams.reqPageName);
                 reqlist.remove(httpParams.methodTag);
+                //若当前请求页面的请求方法链表为空则隐藏缓冲圈
                 if (reqlist.size() <= 0) {
                     LoadingUtils.dissmissLoadingDialog();
                 } else {
                     VolleyRequestUtils.obtainRequestQueueMap().put(httpParams.reqPageName, reqlist);
                 }
             }
+            //回调
             enhanceOnResponse(VolleyResponseUtils.getTag(jsonObject),
                     VolleyResponseUtils.getHttpData(jsonObject).getJson(),
                     httpParams);
