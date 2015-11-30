@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 首页左侧菜单 -->
-    <drawable name="home_leftmenu_select">#f9a013</drawable>
-    <drawable name="home_leftmenu_white">#ffffff</drawable>
+    <!--主题色调-->
+    <color name="main">#ff0066</color>
+
+    <!-- 透明 -->
+    <color name="transparent">#00ffffff</color>
+
+    <!-- 白色 -->
+    <color name="white">#ffffffff</color>
+
+    <!-- 灰色 -->
+    <color name="grey">#ffb8b8b8</color>
+
+    <!-- 黑色 -->
+    <color name="black">#ff1f1f1f</color>
+
+    <!-- 粉色 -->
+    <color name="pink">#ffff1f1f</color>
+
+    <!-- 绿色 -->
+    <color name="blue">#47c2ca</color>
+
 
     <color name="commen_text_color_1">#ff000000</color>
     <!-- 黑色 -->
@@ -47,4 +65,5 @@
     <!-- 绿色 -->
     <color name="common_dark_red">#ff9a0000</color>
     <!-- 暗红色 -->
+
 </resources>

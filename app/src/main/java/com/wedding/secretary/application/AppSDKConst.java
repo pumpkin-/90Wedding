@@ -2,7 +2,7 @@ package com.wedding.secretary.application;
 
 /**
  * SDK常量
- * Created by hmy on 2015/11/2.
+ * Created by hmy on 2015/11/background_picture03.
  */
 public class AppSDKConst {
     //SMSSDK的AppKey和AppSecret

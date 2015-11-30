@@ -1,5 +1,6 @@
 package com.wedding.secretary.base;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.wedding.secretary.utils.LoadingUtils;
+import com.wedding.secretary.R;
+import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.VolleyRequestUtils;
-import com.wedding.secretary.networks.domain.HttpParams;
 import com.wedding.secretary.networks.VolleyResponse;
 import com.wedding.secretary.networks.VolleyResponseUtils;
+import com.wedding.secretary.networks.domain.HttpParams;
+import com.wedding.secretary.utils.images.LoadingUtils;
 import com.wedding.secretary.utils.log.WeddingLog;
 import com.wedding.secretary.utils.string.StringUtils;
 
@@ -38,6 +41,16 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     //初始化控件监听器
     public abstract void initListener();
 
+    //初始化ActionBar
+    public void initActionBar() {
+        // 设置ActionBar样式
+        android.app.ActionBar actionbar = getActivity().getActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(false);
+        actionbar.setDisplayShowHomeEnabled(false);
+        // 设置actionbar的背景图
+        actionbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+    }
+
     public void finish() {
         getActivity().getSupportFragmentManager().popBackStack();
     }
@@ -47,9 +60,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      *
      * @param Tag
      * @param json
-     * @param httpParams
+     * @param result
+     * @param params
      */
-    public abstract void enhanceOnResponse(String Tag, String json, HttpParams httpParams);
+    public abstract void enhanceOnResponse(String Tag, String json, MResult result, HttpParams params);
 
     /**
      * 服务器响应
@@ -64,6 +78,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         } else {
             //缓冲圈处理
             HttpParams httpParams = VolleyResponseUtils.getHttpParams(jsonObject);
+            MResult mResult = VolleyResponseUtils.getMResult(jsonObject);
             //若请求页面不为空
             if (!StringUtils.isEmpty(httpParams.reqPageName)) {
                 //将当前请求页面的请求方法链表中的当前请求方法移除
@@ -79,6 +94,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             //回调
             enhanceOnResponse(VolleyResponseUtils.getTag(jsonObject),
                     VolleyResponseUtils.getHttpData(jsonObject).getJson(),
+                    mResult,
                     httpParams);
         }
     }

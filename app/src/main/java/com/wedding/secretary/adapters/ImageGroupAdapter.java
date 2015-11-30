@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.wedding.secretary.R;
 import com.wedding.secretary.domain.ImageBean;
-import com.wedding.secretary.utils.images.MyImageView;
+import com.wedding.secretary.widgets.MImageView;
 import com.wedding.secretary.utils.images.NativeImageLoader;
 
 public class ImageGroupAdapter extends BaseAdapter {
@@ -59,12 +59,12 @@ public class ImageGroupAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_image_group, null);
-            viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.group_image);
+            viewHolder.mImageView = (MImageView) convertView.findViewById(R.id.group_image);
             viewHolder.mTextViewTitle = (TextView) convertView.findViewById(R.id.group_title);
             viewHolder.mTextViewCounts = (TextView) convertView.findViewById(R.id.group_count);
 
             //用来监听ImageView的宽和高
-            viewHolder.mImageView.setOnMeasureListener(new MyImageView.OnMeasureListener() {
+            viewHolder.mImageView.setOnMeasureListener(new MImageView.OnMeasureListener() {
 
                 @Override
                 public void onMeasureSize(int width, int height) {
@@ -107,7 +107,7 @@ public class ImageGroupAdapter extends BaseAdapter {
     }
 
     public static class ViewHolder {
-        public MyImageView mImageView;
+        public MImageView mImageView;
         public TextView mTextViewTitle;
         public TextView mTextViewCounts;
     }

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_home1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_home1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="220dp"
+                            android:background="@drawable/select_steps_preparation"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="187dp"
+                            android:src="@mipmap/heart" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="38dp"
+                            android:layout_marginTop="186dp"
+                            android:text="婚礼微课堂"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_home3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_home1">
+
+                        <ImageView
+                            android:id="@+id/iv_home3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="180dp"
+                            android:background="@drawable/select_steps_underway"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="146dp"
+                            android:src="@mipmap/heart" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="38dp"
+                            android:layout_marginTop="145dp"
+                            android:text="DIY婚礼现场"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_home2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_home2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="220dp"
+                            android:background="@drawable/select_steps_diyscene"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="187dp"
+                            android:src="@mipmap/heart" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="38dp"
+                            android:layout_marginTop="186dp"
+                            android:text="婚前筹备"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_home4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_home2">
+
+                        <ImageView
+                            android:id="@+id/iv_home4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="180dp"
+                            android:background="@drawable/select_steps_thosethings"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="145dp"
+                            android:src="@mipmap/heart" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="38dp"
+                            android:layout_marginTop="144dp"
+                            android:text="婚礼进行时"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="- 精品推荐 -"
+                android:textSize="28sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

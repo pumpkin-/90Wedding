@@ -1,19 +1,11 @@
 package com.wedding.secretary.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -23,18 +15,13 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.wedding.secretary.R;
 import com.wedding.secretary.application.App;
 import com.wedding.secretary.application.AppData;
-import com.wedding.secretary.application.AppSDKConst;
 import com.wedding.secretary.base.BaseActivity;
-import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.domain.User;
-import com.wedding.secretary.fragments.LoginFragments.CompleteUserInfoFragment;
 import com.wedding.secretary.networks.ApiUtils.UserRequestUtils;
 import com.wedding.secretary.networks.VolleyResponseUtils;
 import com.wedding.secretary.networks.domain.HttpParams;
+import com.wedding.secretary.utils.common.Navigate;
 import com.wedding.secretary.utils.log.WeddingLog;
-import com.wedding.secretary.utils.string.StringUtils;
-
-import cn.smssdk.SMSSDK;
 
 /**
  * Splash页面（显示广告，判断是否自动登录，获取用户信息）
@@ -138,11 +125,9 @@ public class SplashActivity extends BaseActivity {
             if (user != null) {
                 // 获取用户信息成功则跳转至首页
                 App.USER = user;
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Navigate.startMain(this);
             } else {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Navigate.startMain(this);
             }
             finish();
         }
@@ -165,8 +150,8 @@ public class SplashActivity extends BaseActivity {
             //获取用户信息
             UserRequestUtils.doGetUserInfo(SplashActivity.this, TAG, id, SplashActivity.this);
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            Navigate.startMain(this);
+            finish();
         }
     }
 }

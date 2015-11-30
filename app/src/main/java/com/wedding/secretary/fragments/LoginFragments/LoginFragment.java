@@ -1,6 +1,5 @@
 package com.wedding.secretary.fragments.LoginFragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,16 +14,16 @@ import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.wedding.secretary.activities.MainActivity;
+import com.wedding.secretary.R;
 import com.wedding.secretary.application.App;
 import com.wedding.secretary.application.AppData;
-import com.wedding.secretary.domain.LoginInfo;
-import com.wedding.secretary.domain.MResult;
-import com.wedding.secretary.networks.domain.HttpParams;
-import com.wedding.secretary.R;
 import com.wedding.secretary.base.BaseFragment;
+import com.wedding.secretary.domain.MResult;
+import com.wedding.secretary.domain.User;
 import com.wedding.secretary.networks.ApiUtils.UserRequestUtils;
 import com.wedding.secretary.networks.VolleyResponseUtils;
+import com.wedding.secretary.networks.domain.HttpParams;
+import com.wedding.secretary.utils.common.Navigate;
 import com.wedding.secretary.utils.string.StringUtils;
 
 /**
@@ -62,7 +61,7 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, null);
+        View view = inflater.inflate(R.layout.fragment_user_login, null);
         ViewUtils.inject(this, view);
         return view;
     }
@@ -87,12 +86,7 @@ public class LoginFragment extends BaseFragment {
     public void onClick(View v) {
         if (v == tv_register) {
             //注册
-            RegisterFragment registerFragment = new RegisterFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.faded_in, R.anim.faded_out).
-                    replace(R.id.fragment_container_login, registerFragment).
-                    addToBackStack(LoginFragment.class.getSimpleName())
-                    .commit();
+            Navigate.startInputPhoneNumberFragment(this, AppData.REGISTER);
 
         } else if (v == tv_login) {
             //登录
@@ -100,14 +94,12 @@ public class LoginFragment extends BaseFragment {
 
         } else if (v == tv_forget_password) {
             //忘记密码
-            ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().
-                    replace(R.id.fragment_container_login, resetPasswordFragment).
-                    addToBackStack(LoginFragment.class.getSimpleName()).commit();
+            Navigate.startInputPhoneNumberFragment(this, AppData.RESETPASSWORD);
 
         } else if (v == iv_delete_login_username) {
             //删除输入的账号内容
             et_login_username.setText("");
+
         } else if (v == iv_delete_login_password) {
             //删除输入的密码内容
             et_login_password.setText("");
@@ -182,14 +174,13 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    public void enhanceOnResponse(String Tag, String json, HttpParams params) {
+    public void enhanceOnResponse(String Tag, String json, MResult result, HttpParams params) {
         //登录成功
         if (Tag.equals(AppData.USER_REQ_DOUSERLOGIN)) {
-            LoginInfo loginInfo = VolleyResponseUtils.getObject(json, LoginInfo.class);
-            MResult mResult = loginInfo.getmResult();
-            if (mResult.isSuccess()) {
-                //保存到全局User类中
-                App.USER = loginInfo.getUser();
+            User user = VolleyResponseUtils.getObject(json, User.class);
+            if (result.isSuccess() && user != null) {
+                //保存到全局USER中
+                App.updateAppUser(user);
 
                 //将用户登陆成功的状态保存到SharedPreferences
                 //TODO 判断当前用户id是否存在  多用户情况
@@ -201,13 +192,12 @@ public class LoginFragment extends BaseFragment {
                 editor.commit();
 
                 //跳转到首页
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                Navigate.startMain(this);
 
             } else {
-
-                Toast.makeText(getActivity(), mResult.getInfo(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), result.getInfo(), Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 }

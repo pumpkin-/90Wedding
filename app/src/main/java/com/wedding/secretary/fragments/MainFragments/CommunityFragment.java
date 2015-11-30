@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wedding.secretary.base.BaseFragment;
+import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpParams;
 
 /**
@@ -33,7 +34,7 @@ public class CommunityFragment extends BaseFragment {
     }
 
     @Override
-    public void enhanceOnResponse(String Tag, String json, HttpParams params) {
+    public void enhanceOnResponse(String Tag, String json, MResult result, HttpParams params) {
 
     }
 

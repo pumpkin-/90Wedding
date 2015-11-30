@@ -9,11 +9,9 @@ import java.util.Map;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 
 import com.wedding.secretary.R;
-import com.wedding.secretary.utils.images.MyImageView;
+import com.wedding.secretary.widgets.MImageView;
 import com.wedding.secretary.utils.images.NativeImageLoader;
 
 public class ImageChildAdapter extends BaseAdapter {
@@ -69,11 +67,11 @@ public class ImageChildAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_image_child, null);
             viewHolder = new ViewHolder();
-            viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.child_image);
+            viewHolder.mImageView = (MImageView) convertView.findViewById(R.id.child_image);
             viewHolder.mCheckBox = (CheckBox) convertView.findViewById(R.id.child_checkbox);
 
             //用来监听ImageView的宽和高
-            viewHolder.mImageView.setOnMeasureListener(new MyImageView.OnMeasureListener() {
+            viewHolder.mImageView.setOnMeasureListener(new MImageView.OnMeasureListener() {
 
                 @Override
                 public void onMeasureSize(int width, int height) {
@@ -164,7 +162,7 @@ public class ImageChildAdapter extends BaseAdapter {
 
 
     public static class ViewHolder {
-        public MyImageView mImageView;
+        public MImageView mImageView;
         public CheckBox mCheckBox;
     }
 

@@ -1,21 +1,21 @@
 package com.wedding.secretary.fragments.MainFragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wedding.secretary.R;
-import com.wedding.secretary.activities.LoginActivity;
 import com.wedding.secretary.application.App;
 import com.wedding.secretary.base.BaseFragment;
-import com.wedding.secretary.fragments.LoginFragments.CompleteUserInfoFragment;
+import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpParams;
+import com.wedding.secretary.utils.common.Navigate;
 
 /**
  * 我的
@@ -26,15 +26,14 @@ public class MineFragment extends BaseFragment {
     private static String TAG = MineFragment.class.getSimpleName();
 
     //控件
-    @ViewInject(R.id.btn_userInfo_update)
-    private Button btn_userInfo_update;
-    //控件
-    @ViewInject(R.id.btn_user_registe)
-    private Button btn_user_registe;
+    @ViewInject(R.id.iv_mine_avatar)
+    private ImageView iv_mine_avatar;
+    @ViewInject(R.id.tv_mine_nickName)
+    private TextView tv_mine_nickName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, null);
+        View view = inflater.inflate(R.layout.fragment_main_mine, null);
         ViewUtils.inject(this, view);
         return view;
     }
@@ -43,40 +42,48 @@ public class MineFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initListener();
-        initComponent();
+        initUserInfo();
+    }
+
+    private void initUserInfo() {
+        if (App.USER != null) {
+            if (App.USER.getAvatar() != null) {
+                ImageLoader.getInstance().displayImage(App.USER.getAvatar(), iv_mine_avatar);
+            }
+            if (App.USER.getNickName() != null) {
+                tv_mine_nickName.setText(App.USER.getNickName());
+            }
+        }
     }
 
     @Override
     public void initListener() {
-        btn_userInfo_update.setOnClickListener(this);
-        btn_user_registe.setOnClickListener(this);
+        iv_mine_avatar.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == btn_userInfo_update) {
-            //跳转至修改个人信息界面
+        if (v == iv_mine_avatar) {
             if (App.USER != null && App.USER.getId() != null) {
-                CompleteUserInfoFragment completeUserInfoFragment = new CompleteUserInfoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.faded_in, R.anim.faded_out).
-                        replace(R.id.main_fragment_container, completeUserInfoFragment).
-                        addToBackStack(MineFragment.class.getSimpleName()).commit();
+                //跳转至修改个人信息界面
+                Navigate.startUserUpdateInfoFragment(this, 0);
+
             } else {
-                Toast.makeText(getActivity(), "您尚未登录", Toast.LENGTH_SHORT).show();
+                //跳转至登录界面
+                Navigate.startLoginActivity(this);
             }
         }
-        //注册
-        if(v == btn_user_registe) {
-            Intent intent= new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        }
     }
 
-    private void initComponent() {
-    }
-
+    /**
+     * 服务器响应处理
+     *
+     * @param Tag
+     * @param json
+     * @param params
+     */
     @Override
-    public void enhanceOnResponse(String Tag, String json, HttpParams params) {
+    public void enhanceOnResponse(String Tag, String json, MResult result, HttpParams params) {
 
     }
 

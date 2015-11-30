@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/iv_microclass_right_heart"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="16dp"
+        android:src="@mipmap/heart" />
+
+    <TextView
+        android:id="@+id/tv_microclass_right_lv2Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/iv_microclass_right_heart"
+        android:text="二级标题"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_microclass_right_lv3Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_microclass_right_lv2Title"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:text="文章标题"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_microclass_right_articleSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_microclass_right_lv3Title"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:text="文章来源"
+        android:textColor="@color/blue"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_microclass_right_articleImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_launcher" />
+
+</RelativeLayout>

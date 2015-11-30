@@ -1,6 +1,7 @@
 package com.wedding.secretary.networks;
 
 import com.alibaba.fastjson.JSON;
+import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpData;
 import com.wedding.secretary.networks.domain.HttpParams;
 
@@ -58,6 +59,17 @@ public class VolleyResponseUtils {
     public static HttpParams getHttpParams(JSONObject jsonObject) {
         HttpData data = JSON.parseObject(jsonObject.toString(), HttpData.class);
         return data.getHttpParams();
+    }
+
+    /**
+     *获取HttpData中的MResult
+     *
+     * @param jsonObject
+     * @return
+     */
+    public static MResult getMResult(JSONObject jsonObject) {
+        HttpData data = JSON.parseObject(jsonObject.toString(), HttpData.class);
+        return data.getmResult();
     }
 
     /**

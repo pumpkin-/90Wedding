@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +24,8 @@ public class LoadingProgressDialog extends Dialog {
     public LoadingProgressDialog(Context context) {
         super(context, R.style.loadingDialog);
         this.context = context;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.widget_loading);
+       // requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.item_loading);
 
         img = (ImageView) findViewById(R.id.loding_img);
         textView = (TextView) findViewById(R.id.loading_tv);

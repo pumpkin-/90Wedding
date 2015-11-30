@@ -1,5 +1,7 @@
 package com.wedding.secretary.networks.domain;
 
+import com.wedding.secretary.domain.MResult;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
 public class HttpData implements Serializable {
 
     private String json;
+    private MResult mResult;
     private HttpParams httpParams;
 
     public HttpData() {
@@ -24,6 +27,14 @@ public class HttpData implements Serializable {
 
     public void setJson(String json) {
         this.json = json;
+    }
+
+    public MResult getmResult() {
+        return mResult;
+    }
+
+    public void setmResult(MResult mResult) {
+        this.mResult = mResult;
     }
 
     public HttpParams getHttpParams() {

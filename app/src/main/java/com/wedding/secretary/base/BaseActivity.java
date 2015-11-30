@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.wedding.secretary.utils.LoadingUtils;
+import com.wedding.secretary.utils.images.LoadingUtils;
 import com.wedding.secretary.networks.VolleyRequestUtils;
 import com.wedding.secretary.networks.VolleyResponse;
 import com.wedding.secretary.networks.VolleyResponseUtils;

@@ -17,7 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.wedding.secretary.activities.MainActivity;
 import com.wedding.secretary.application.AppData;
-import com.wedding.secretary.utils.LoadingUtils;
+import com.wedding.secretary.utils.images.LoadingUtils;
 import com.wedding.secretary.networks.domain.HttpData;
 import com.wedding.secretary.networks.domain.HttpParams;
 import com.wedding.secretary.utils.log.WeddingLog;

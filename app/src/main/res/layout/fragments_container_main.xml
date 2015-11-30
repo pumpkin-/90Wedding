@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_fragment_container"
+    android:id="@+id/fragment_container_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <!-- fragment容器 -->
-    <android.support.v4.view.ViewPager
+    <com.wedding.secretary.widgets.MViewPager
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +19,7 @@
 
         <include
             android:id="@+id/home_frg_inlet_bottom"
-            layout="@layout/activity_index_bottom"
+            layout="@layout/activity_bottomindex"
             android:layout_width="match_parent"
             android:layout_height="55dp" />
     </FrameLayout>

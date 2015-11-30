@@ -69,7 +69,7 @@ public class FileConstants
     // 用户输入缓存
     public static final String CACHE_USER_ASSOCIATELIB = "userAssociateLib.dat";
     // IM图片url缓存路径
-//    public static final String CACHE_IM_URL_MAP = SAVE_FILE_PATH_DIRECTORY + "imcache/" + "urlmap";// TODO 2.8屏蔽
+//    public static final String CACHE_IM_URL_MAP = SAVE_FILE_PATH_DIRECTORY + "imcache/" + "urlmap";// TODO background_picture03.8屏蔽
     
     // 流量统计文件路径
     public static final String apiTrafficStatsPath = SAVE_FILE_PATH + RESOURCE_DIRECTORY + "ApiTrafficStats.txt";

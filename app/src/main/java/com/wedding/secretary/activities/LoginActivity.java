@@ -5,9 +5,10 @@ import android.view.View;
 
 import com.wedding.secretary.R;
 import com.wedding.secretary.base.BaseFragmentActivity;
-import com.wedding.secretary.fragments.LoginFragments.LoginFragment;
+import com.wedding.secretary.utils.common.Navigate;
 
 /**
+ * 登录
  * Created by hmy on 2015/10/27.
  */
 public class LoginActivity extends BaseFragmentActivity {
@@ -17,11 +18,7 @@ public class LoginActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragments_container_login);
 
-        LoginFragment loginFragment = new LoginFragment();
-        getSupportFragmentManager().beginTransaction().
-                setCustomAnimations(R.anim.faded_in, R.anim.faded_out).
-                replace(R.id.fragment_container_login, loginFragment)
-                .commit();
+        Navigate.startLogin(this, 0);
     }
 
     @Override

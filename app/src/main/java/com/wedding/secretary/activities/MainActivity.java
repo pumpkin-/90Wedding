@@ -3,10 +3,14 @@ package com.wedding.secretary.activities;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -14,9 +18,10 @@ import com.wedding.secretary.R;
 import com.wedding.secretary.adapters.HomeViewPagerAdapter;
 import com.wedding.secretary.base.BaseFragmentActivity;
 import com.wedding.secretary.fragments.MainFragments.CommunityFragment;
-import com.wedding.secretary.fragments.MainFragments.MineFragment;
 import com.wedding.secretary.fragments.MainFragments.HomeFragment;
+import com.wedding.secretary.fragments.MainFragments.MineFragment;
 import com.wedding.secretary.fragments.MainFragments.ToolsFragment;
+import com.wedding.secretary.widgets.MViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +34,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     //控件
     @ViewInject(R.id.vp_main) //viewpager
-    private ViewPager vp_main;
+    private MViewPager vp_main;
 
     @ViewInject(R.id.iv_main_home)  //首页
     private ImageView iv_main_home;
@@ -64,13 +69,31 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.fragments_container_main);
         ViewUtils.inject(this);
+
         initListener();
         initFragment();
         initViewPager();
-        //initJabActionBar();
+        initActionBar();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search: {
+                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
+            }
+            break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initViewPager() {
@@ -92,19 +115,19 @@ public class MainActivity extends BaseFragmentActivity {
             switch (index) {
                 case 0:
                     setPageIndex(0);
-                    // getActionBar().setTitle("首页");
+                    getActionBar().setTitle("首页");
                     break;
                 case 1:
                     setPageIndex(1);
-                    // getActionBar().setTitle("社区");
+                    getActionBar().setTitle("社区");
                     break;
                 case 2:
                     setPageIndex(2);
-                    // getActionBar().setTitle("工具");
+                    getActionBar().setTitle("工具");
                     break;
                 case 3:
                     setPageIndex(3);
-                    //  getActionBar().setTitle("我");
+                    getActionBar().setTitle("我");
                     break;
                 default:
                     break;
@@ -213,5 +236,4 @@ public class MainActivity extends BaseFragmentActivity {
             setPageIndex(3);
         }
     }
-
 }

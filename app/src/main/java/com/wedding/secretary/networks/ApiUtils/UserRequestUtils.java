@@ -40,7 +40,7 @@ public class UserRequestUtils {
     }
 
     /**
-     * 用户注册
+     * 用户注册/重置密码
      *
      * @param activity
      * @param reqPageName
@@ -48,18 +48,18 @@ public class UserRequestUtils {
      * @param password
      * @param volleyResponse
      */
-    public static void doUserRegiste(Activity activity, String reqPageName, String phoneNumber, String password, VolleyResponse volleyResponse) {
+    public static void doUserRegisterOrResetPassword(Activity activity, String reqPageName, String phoneNumber, String password, VolleyResponse volleyResponse) {
 
         User user = new User();
+        user.setId(App.USER.getId());
         user.setUsername(phoneNumber);
         user.setPhoneNumber(phoneNumber);
         user.setPassword(StringUtils.getMD5Str(password));
         user.setNickName(phoneNumber);
-        App.USER = user;
 
         String json = JSON.toJSONString(user);
 
-        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUSERREGISTE);
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOUSERREGISTERORRESETPASSWORD);
         VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
     }
 
@@ -100,7 +100,7 @@ public class UserRequestUtils {
     }
 
     /**
-     * 获取用户信息
+     * 通过id获取用户信息
      *
      * @param activity
      * @param reqPageName
@@ -112,6 +112,22 @@ public class UserRequestUtils {
         String json = JSON.toJSONString(id);
 
         HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOGETUSERINFO);
+        VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
+    }
+
+    /**
+     * 通过username获取用户信息
+     *
+     * @param activity
+     * @param reqPageName
+     * @param username
+     * @param volleyResponse
+     */
+    public static void doGetUserByUsername(Activity activity, String reqPageName, String username, VolleyResponse volleyResponse) {
+
+        String json = JSON.toJSONString(username);
+
+        HttpParams httpParams = new HttpParams(reqPageName, AppData.USER_REQ_DOGETUSERBYUSERNAME);
         VolleyRequestUtils.httpPost(activity, httpParams, json, volleyResponse);
     }
 

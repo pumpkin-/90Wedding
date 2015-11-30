@@ -4,16 +4,12 @@
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -27,12 +23,14 @@
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name=".activities.SplashActivity" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.LoadingPagesActivity"></activity>
+        <!-- Loading界面 -->
+        <activity android:name=".activities.LoadingPagesActivity" />
+
         <!-- 主界面 -->
         <activity
             android:name=".activities.MainActivity"
@@ -40,20 +38,33 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
-        <!-- 登录界面 -->
-        <activity android:name=".activities.LoginActivity"></activity>
+            android:theme="@style/CustomThemeByron" />
 
+        <!-- 登录界面 -->
+        <activity android:name=".activities.LoginActivity" />
+
+        <activity android:name=".activities.SelectImagesActivity" />
+        <activity android:name=".activities.ShowImagesActivity" />
+
+        <!-- 四大步骤界面 -->
+        <activity
+            android:name=".activities.MicroClassActivity"
+            android:theme="@style/CustomThemeByron" />
+        <activity
+            android:name=".activities.PreparationActivity"
+            android:theme="@style/CustomThemeByron" />
+        <activity
+            android:name=".activities.DIYSceneActivity"
+            android:theme="@style/CustomThemeByron" />
+        <activity
+            android:name=".activities.UnderwayActivity"
+            android:theme="@style/CustomThemeByron" />
 
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
-        <activity android:name=".utils.images.SelectImagesFragment"></activity>
-        <activity android:name=".utils.images.ShowImageActivity"></activity>
-
     </application>
 
 </manifest>
