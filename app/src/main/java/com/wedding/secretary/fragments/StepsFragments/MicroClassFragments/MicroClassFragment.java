@@ -13,12 +13,13 @@ import com.wedding.secretary.adapters.ExpandableListViexAdapter;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpParams;
+import com.wedding.secretary.utils.common.Navigate;
 
 /**
  * 婚礼微课堂
  * Created by hmy on 2015/11/18.
  */
-public class MicroClassFragment extends BaseFragment {
+public class MicroClassFragment extends BaseFragment implements ExpandableListView.OnChildClickListener {
 
     private static String TAG = MicroClassFragment.class.getSimpleName();
 
@@ -40,21 +41,17 @@ public class MicroClassFragment extends BaseFragment {
 
         initActionBar();
         getActivity().getActionBar().setTitle("婚礼微课堂");
-//        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        elv_microClass.setAdapter(new ExpandableListViexAdapter(getActivity()));
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        ExpandableListViexAdapter adapter = new ExpandableListViexAdapter(getActivity());
+        elv_microClass.setAdapter(adapter);
+        for (int i = 0; i < adapter.getGroupCount(); i++) {
+            elv_microClass.expandGroup(i);
+        }
+        elv_microClass.setOnChildClickListener(this);
 
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        getActivity().getMenuInflater().inflate(R.menu.menu_fragment, menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
+
 
     @Override
     public void initListener() {
@@ -65,10 +62,14 @@ public class MicroClassFragment extends BaseFragment {
 
     }
 
-
     @Override
     public void enhanceOnResponse(String Tag, String json, MResult result, HttpParams params) {
 
     }
 
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        Navigate.startMicroClassWebView(this, 0);
+        return true;
+    }
 }

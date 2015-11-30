@@ -22,6 +22,7 @@ import com.wedding.secretary.fragments.LoginFragments.LoginFragment;
 import com.wedding.secretary.fragments.LoginFragments.UserUpdateInfoFragment;
 import com.wedding.secretary.fragments.StepsFragments.DIYSceneFragments.DIYSceneFragment;
 import com.wedding.secretary.fragments.StepsFragments.MicroClassFragments.MicroClassFragment;
+import com.wedding.secretary.fragments.StepsFragments.MicroClassFragments.MicroClassWebView;
 import com.wedding.secretary.fragments.StepsFragments.PreparationFragments.PreparationFragment;
 import com.wedding.secretary.fragments.StepsFragments.UnderwayFragments.UnderwayFragment;
 
@@ -89,6 +90,12 @@ public class Navigate {
 
     public static void startMicroClassFragment(BaseFragment fromFragment, int action) {
         MicroClassFragment toFragment = new MicroClassFragment();
+        startContainer(fromFragment, toFragment, R.id.fragment_container_microclass, action);
+    }
+
+    //跳转至婚礼微课堂WebView
+    public static void startMicroClassWebView(BaseFragment fromFragment, int action) {
+        MicroClassWebView toFragment = new MicroClassWebView();
         startContainer(fromFragment, toFragment, R.id.fragment_container_microclass, action);
     }
 

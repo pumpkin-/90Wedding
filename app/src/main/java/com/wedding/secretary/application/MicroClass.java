@@ -5,6 +5,8 @@ package com.wedding.secretary.application;
  */
 public class MicroClass {
 
+    public static final int LEFT = 0;
+    public static final int RIGHT = 1;
     //文章路径
     private String path;
     //一级标题（1—婚前筹备，2—服务协商，3—婚礼倒计时）

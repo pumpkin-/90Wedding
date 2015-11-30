@@ -16,7 +16,7 @@ public class AppData {
     public static final int RESETPASSWORD = 3;
 
     //请求路径
-    public static final String BASE_URL = "http://192.168.0.103:8080/wedding";
+    public static final String BASE_URL = "http://192.168.0.106:8080/wedding";
 
     /**
      * 用户请求相关----------------------------------------------------
