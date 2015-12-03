@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="@drawable/list_item_selector">
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_list_item">
 
     <ImageView
         android:id="@+id/iv_microclass_left_heart"
@@ -31,6 +31,8 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_microclass_left_articleImage"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="文章标题"
         android:textSize="18sp" />
 

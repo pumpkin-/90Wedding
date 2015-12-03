@@ -3,18 +3,18 @@ package com.wedding.secretary.adapters;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wedding.secretary.R;
 import com.wedding.secretary.application.MicroClass;
 import com.wedding.secretary.application.MicroClassData;
+import com.wedding.secretary.widgets.AnimatedExpandableListView;
 
 /**
  * Created by hmy on 2015/11/26.
  */
-public class ExpandableListViexAdapter extends BaseExpandableListAdapter {
+public class ExpandableListViexAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
     private Context context;
     private ViewHolderGroup viewHolderGroup;
@@ -30,11 +30,6 @@ public class ExpandableListViexAdapter extends BaseExpandableListAdapter {
     @Override
     public int getGroupCount() {
         return MicroClassData.microClassGroups.size();
-    }
-
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().size();
     }
 
     @Override
@@ -79,8 +74,7 @@ public class ExpandableListViexAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
+    public View getRealChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_microclass_child, null);
             viewHolderChild = new ViewHolderChild();
@@ -154,6 +148,13 @@ public class ExpandableListViexAdapter extends BaseExpandableListAdapter {
         }
         return convertView;
     }
+
+    @Override
+    public int getRealChildrenCount(int groupPosition) {
+        return MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().size();
+    }
+
+
     @Override
     public boolean hasStableIds() {
         return false;

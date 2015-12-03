@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -16,6 +18,7 @@ import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpParams;
 
 /**
+ * 婚礼微课堂WebView
  * Created by hmy on 2015/11/30.
  */
 public class MicroClassWebView extends BaseFragment {
@@ -25,6 +28,8 @@ public class MicroClassWebView extends BaseFragment {
     //控件
     @ViewInject(R.id.wv_microclass)
     private WebView wv_microclass;
+    @ViewInject(R.id.pb_microclass)
+    private ProgressBar pb_microclass;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +46,23 @@ public class MicroClassWebView extends BaseFragment {
         initActionBar();
         getActivity().getActionBar().setTitle("婚礼微课堂");
 
+        //进度条
+        wv_microclass.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    pb_microclass.setVisibility(View.INVISIBLE);
+                } else {
+                    if (View.INVISIBLE == pb_microclass.getVisibility()) {
+                        pb_microclass.setVisibility(View.VISIBLE);
+                    }
+
+                    pb_microclass.setProgress(newProgress);
+                }
+                super.onProgressChanged(view, newProgress);
+            }
+        });
+
         //启用支持javascript
         WebSettings settings = wv_microclass.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -51,7 +73,6 @@ public class MicroClassWebView extends BaseFragment {
         wv_microclass.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
                 //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
                 view.loadUrl(url);
                 return true;

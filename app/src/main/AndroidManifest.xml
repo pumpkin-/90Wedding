@@ -43,28 +43,28 @@
         <!-- 登录界面 -->
         <activity android:name=".activities.LoginActivity" />
 
+        <!-- 头像上传界面-->
         <activity android:name=".activities.SelectImagesActivity" />
         <activity android:name=".activities.ShowImagesActivity" />
 
         <!-- 四大步骤界面 -->
         <activity
             android:name=".activities.MicroClassActivity"
+
             android:theme="@style/CustomThemeByron" />
         <activity
             android:name=".activities.PreparationActivity"
+
             android:theme="@style/CustomThemeByron" />
         <activity
             android:name=".activities.DIYSceneActivity"
+
             android:theme="@style/CustomThemeByron" />
         <activity
             android:name=".activities.UnderwayActivity"
+
             android:theme="@style/CustomThemeByron" />
 
-        <activity
-            android:name="com.mob.tools.MobUIShell"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>
