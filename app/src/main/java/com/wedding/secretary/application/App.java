@@ -5,11 +5,18 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.callback.InitResultCallback;
+import com.alibaba.sdk.android.trade.TradeConfigs;
+import com.alibaba.sdk.android.trade.TradeConstants;
+import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
+import com.alibaba.sdk.android.trade.model.TradeResult;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.wedding.secretary.domain.User;
+import com.wedding.secretary.utils.log.WeddingLog;
 
 /**
  * 程序初始化
@@ -22,6 +29,7 @@ public class App extends Application {
         super.onCreate();
         app = this;
         initImageLoader();
+        initAlibaba();
     }
 
     private static App app;
@@ -96,6 +104,34 @@ public class App extends Application {
                 .enableLogging()
                 .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    //初始化AlibabaSDK
+    private void initAlibaba() {
+        TradeConfigs.defaultItemDetailWebViewType = TradeConstants.BAICHUAN_H5_VIEW;
+        TradeConfigs.defaultTradeProcessCallback = new TradeProcessCallback() {
+            @Override
+            public void onPaySuccess(TradeResult tradeResult) {
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+            }
+        };
+        TradeConfigs.defaultTaokePid = "mm_*****";
+        TradeConfigs.defaultISVCode = "myIsvCode";
+
+        AlibabaSDK.asyncInit(this, new InitResultCallback() {
+            @Override
+            public void onSuccess() {
+                WeddingLog.d("AlibabaSDK初始化成功");
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                WeddingLog.d("AlibabaSDK初始化失败");
+            }
+        });
     }
 
 }

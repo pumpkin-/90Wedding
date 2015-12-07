@@ -1,18 +1,21 @@
-package com.wedding.secretary.application;
+package com.wedding.secretary.domain;
 
 /**
  * Created by hmy on 2015/11/26.
  */
-public class MicroClass {
+public class MicroClassChild {
 
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
-    //文章路径
-    private String path;
+
+    //id
+    private int id;
     //一级标题（1—婚前筹备，2—服务协商，3—婚礼倒计时）
     private String lv1Title;
-    //二级标题（1—双方协商，2—此刻定情，3—婚宴相关，4—婚照拍摄，5—第三方确定，6—当日活动确认，7—细节买办，8—后期计划）
+    //二级标题
     private String lv2Title;
+    //二级步骤
+    private String lv2Step;
     //文章标题
     private String lv3Title;
     //文章来源
@@ -21,25 +24,27 @@ public class MicroClass {
     private int articleImage;
     //左右展示
     public int toggle;
-    public MicroClass() {
+
+    public MicroClassChild() {
 
     }
 
-    public MicroClass(String path, int articleImage, String articleSource, String lv1Title, String lv2Title, String lv3Title) {
-        this.path = path;
+    public MicroClassChild(int id, int articleImage, String articleSource, String lv1Title, String lv2Title, String lv2Step, String lv3Title) {
+        this.id = id;
         this.articleImage = articleImage;
         this.lv1Title = lv1Title;
         this.lv2Title = lv2Title;
+        this.lv2Step = lv2Step;
         this.lv3Title = lv3Title;
         this.articleSource = articleSource;
     }
 
-    public String getPath() {
-        return path;
+    public int getId() {
+        return id;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLv1Title() {
@@ -56,6 +61,14 @@ public class MicroClass {
 
     public void setLv2Title(String lv2Title) {
         this.lv2Title = lv2Title;
+    }
+
+    public String getLv2Step() {
+        return lv2Step;
+    }
+
+    public void setLv2Step(String lv2Step) {
+        this.lv2Step = lv2Step;
     }
 
     public String getLv3Title() {

@@ -31,4 +31,10 @@ public class AppData {
      * 文件上传相关----------------------------------------------------
      */
     public static final String USER_REQ_DOAVATARUPLOAD = "/file/operation/avatarUpload.action";
+
+    /**
+     * 婚礼微课堂相关----------------------------------------------------
+     */
+    public static final String MICROCLASS_REQ_DOARTICLEDETAIL = "/article/operation/articleDetail.action";
+
 }

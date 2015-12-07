@@ -1,4 +1,4 @@
-package com.wedding.secretary.application;
+package com.wedding.secretary.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class MicroClassGroup {
 
     private String microClasseGroupDesc;//描述
 
-    private List<MicroClass> microClasseGroup;
+    private List<MicroClassChild> microClasseGroup;
 
     public int getMicroClasseGroupImage() {
         return microClasseGroupImage;
@@ -40,14 +40,14 @@ public class MicroClassGroup {
         this.microClasseGroupDesc = microClasseGroupDesc;
     }
 
-    public List<MicroClass> getMicroClasseGroup() {
+    public List<MicroClassChild> getMicroClasseGroup() {
         if (microClasseGroup == null) {
-            microClasseGroup = new ArrayList<MicroClass>();
+            microClasseGroup = new ArrayList<MicroClassChild>();
         }
         return microClasseGroup;
     }
 
-    public void setMicroClasseGroup(List<MicroClass> microClasseGroup) {
+    public void setMicroClasseGroup(List<MicroClassChild> microClasseGroup) {
         this.microClasseGroup = microClasseGroup;
     }
 }

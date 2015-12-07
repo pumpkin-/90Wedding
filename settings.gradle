@@ -1,2 +1,2 @@
-include ':app', ':smssdk', ':smssdk', ':smssdk', ':volley'
+include ':app', ':smssdk', ':smssdk', ':smssdk', ':volley', ':OneSDK'
 include ':smssdk'

@@ -13,9 +13,13 @@ import android.widget.ProgressBar;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.wedding.secretary.R;
+import com.wedding.secretary.application.AppData;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.domain.MResult;
 import com.wedding.secretary.networks.domain.HttpParams;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 婚礼微课堂WebView
@@ -31,6 +35,9 @@ public class MicroClassWebView extends BaseFragment {
     @ViewInject(R.id.pb_microclass)
     private ProgressBar pb_microclass;
 
+    //变量
+    private int action = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_step_microclass_webview, null);
@@ -45,6 +52,9 @@ public class MicroClassWebView extends BaseFragment {
 
         initActionBar();
         getActivity().getActionBar().setTitle("婚礼微课堂");
+
+        Bundle bundle = getArguments();
+        action = bundle.getInt("action");
 
         //进度条
         wv_microclass.setWebChromeClient(new WebChromeClient() {
@@ -66,9 +76,14 @@ public class MicroClassWebView extends BaseFragment {
         //启用支持javascript
         WebSettings settings = wv_microclass.getSettings();
         settings.setJavaScriptEnabled(true);
-        wv_microclass.loadUrl("http://192.168.0.106:8080/wedding/index.jsp");
+
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", action + "");
+        wv_microclass.loadUrl(AppData.BASE_URL + AppData.MICROCLASS_REQ_DOARTICLEDETAIL, map);
+
         //WebView加载web资源
         //wv_microclass.loadUrl("http://baidu.com");
+
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
         wv_microclass.setWebViewClient(new WebViewClient() {
             @Override

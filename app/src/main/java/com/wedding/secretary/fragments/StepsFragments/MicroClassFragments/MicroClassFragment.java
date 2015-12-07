@@ -12,6 +12,7 @@ import com.wedding.secretary.R;
 import com.wedding.secretary.adapters.ExpandableListViexAdapter;
 import com.wedding.secretary.base.BaseFragment;
 import com.wedding.secretary.domain.MResult;
+import com.wedding.secretary.domain.MicroClassData;
 import com.wedding.secretary.networks.domain.HttpParams;
 import com.wedding.secretary.utils.common.Navigate;
 import com.wedding.secretary.widgets.AnimatedExpandableListView;
@@ -75,7 +76,7 @@ public class MicroClassFragment extends BaseFragment implements
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
                                 int childPosition, long id) {
-        Navigate.startMicroClassWebView(this, 0);
+        Navigate.startMicroClassWebView(this, MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getId());
         adapter.notifyDataSetChanged();
         return true;
     }

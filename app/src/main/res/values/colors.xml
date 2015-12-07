@@ -8,56 +8,22 @@
     <color name="white">#ffffffff</color>
     <!-- 灰色 -->
     <color name="grey">#ffb8b8b8</color>
+    <!-- hint灰色背景 -->
+    <color name="grey_hint">#ffcccccc</color>
+    <!-- 黑色 -->
+    <color name="black2">#ff636363</color>
+    <!-- 黑色 -->
+    <color name="black1">#ff4d4d4d</color>
     <!-- 黑色 -->
     <color name="black">#ff1f1f1f</color>
     <!-- 粉色 -->
     <color name="pink">#ffff1f1f</color>
-    <!-- 绿色 -->
+    <!-- 蓝色 -->
     <color name="blue">#47c2ca</color>
-
-
-    <color name="commen_text_color_1">#ff000000</color>
-    <!-- 黑色 -->
-    <color name="commen_text_color_2">#ff8a8a8a</color>
-    <!-- hint灰色背景 -->
-    <color name="commen_text_color_hint">#cccccc</color>
-    <!-- 灰色 -->
-    <color name="commen_text_color_3">#fff9a013</color>
     <!-- 橘黄 -->
-    <color name="commen_text_color_4">#ffffffff</color>
-    <!-- 白色 -->
-    <color name="commen_text_color_5">#ff1db200</color>
-    <!-- 绿色 -->
-    <color name="commen_text_color_6">#ff9a0000</color>
-    <!-- 暗红色 -->
-    <color name="divider_color_1">#ffc5c5c5</color>
-    <!-- 灰色 -->
-
-    <!-- 全局字体颜色 -->
-    <color name="common_black">#ff000000</color>
-    <!-- 黑色 -->
-    <color name="common_light_black">#22000000</color>
-    <color name="common_gray">#ff8a8a8a</color>
-    <!-- 灰色 -->
-    <color name="common_light_gray">#ffc5c5c5</color>
-    <!-- 灰色 -->
-    <color name="common_light_gray_e3e3e3">#e3e3e3</color>
-    <!-- 浅灰色 -->
-    <color name="common_light_gray2">#ffe5e5e5</color>
-    <!-- 浅灰色 -->
-    <color name="common_orange">#fff9a013</color>
-    <!-- 橘黄 -->
-    <color name="common_orange1">#ffe9a013</color>
-    <!-- 橘黄 -->
-    <color name="common_orange2">#ffd9a013</color>
-    <!-- 橘黄 -->
-    <color name="common_orange3">#ffc9a013</color>
-    <!-- 橘黄 -->
-    <color name="common_white">#ffffffff</color>
-    <!-- 白色 -->
-    <color name="common_green">#ff1db200</color>
-    <!-- 绿色 -->
-    <color name="common_dark_red">#ff9a0000</color>
-    <!-- 暗红色 -->
+    <color name="orange">#fff9a013</color>
+    <color name="orange1">#ffe9a013</color>
+    <color name="orange2">#ffd9a013</color>
+    <color name="orange3">#ffc9a013</color>
 
 </resources>

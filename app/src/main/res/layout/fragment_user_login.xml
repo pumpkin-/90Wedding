@@ -58,7 +58,7 @@
                         android:paddingLeft="12dp"
                         android:paddingRight="8dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/commen_text_color_hint"
+                        android:textColorHint="@color/grey_hint"
                         android:textCursorDrawable="@null" />
 
                     <ImageView
@@ -104,7 +104,7 @@
                         android:paddingLeft="12dp"
                         android:paddingRight="8dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/commen_text_color_hint"
+                        android:textColorHint="@color/grey_hint"
                         android:textCursorDrawable="@null" />
 
                     <ImageView

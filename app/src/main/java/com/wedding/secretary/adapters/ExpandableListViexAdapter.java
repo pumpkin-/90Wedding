@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wedding.secretary.R;
-import com.wedding.secretary.application.MicroClass;
-import com.wedding.secretary.application.MicroClassData;
+import com.wedding.secretary.domain.MicroClassChild;
+import com.wedding.secretary.domain.MicroClassData;
 import com.wedding.secretary.widgets.AnimatedExpandableListView;
 
 /**
@@ -69,7 +69,7 @@ public class ExpandableListViexAdapter extends AnimatedExpandableListView.Animat
         viewHolderGroup.iv_microclass_group_image.setImageResource(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroupImage());
         viewHolderGroup.tv_microclass_group_title.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroupTitle());
         viewHolderGroup.tv_microclass_group_desc.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroupDesc());
-        viewHolderGroup.tv_microclass_group_stepNum.setText(" STEP " + (groupPosition + 1));
+        viewHolderGroup.tv_microclass_group_stepNum.setText("  STEP  " + (groupPosition + 1));
         return convertView;
     }
 
@@ -83,10 +83,12 @@ public class ExpandableListViexAdapter extends AnimatedExpandableListView.Animat
             //new left 填充  title赋值
 
             viewHolderChild.tv_microclass_left_lv2Title = (TextView) convertView.findViewById(R.id.tv_microclass_left_lv2Title);
+            viewHolderChild.tv_microclass_left_lv2Step = (TextView) convertView.findViewById(R.id.tv_microclass_left_lv2Step);
             viewHolderChild.tv_microclass_left_lv3Title = (TextView) convertView.findViewById(R.id.tv_microclass_left_lv3Title);
             viewHolderChild.tv_microclass_left_articleSource = (TextView) convertView.findViewById(R.id.tv_microclass_left_articleSource);
             viewHolderChild.iv_microclass_left_articleImage = (ImageView) convertView.findViewById(R.id.iv_microclass_left_articleImage);
             viewHolderChild.tv_microclass_right_lv2Title = (TextView) convertView.findViewById(R.id.tv_microclass_right_lv2Title);
+            viewHolderChild.tv_microclass_right_lv2Step = (TextView) convertView.findViewById(R.id.tv_microclass_right_lv2Step);
             viewHolderChild.tv_microclass_right_lv3Title = (TextView) convertView.findViewById(R.id.tv_microclass_right_lv3Title);
             viewHolderChild.tv_microclass_right_articleSource = (TextView) convertView.findViewById(R.id.tv_microclass_right_articleSource);
             viewHolderChild.iv_microclass_right_articleImage = (ImageView) convertView.findViewById(R.id.iv_microclass_right_articleImage);
@@ -105,43 +107,45 @@ public class ExpandableListViexAdapter extends AnimatedExpandableListView.Animat
             //toggle = LEFT;
             for (int i = 0; i < MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().size(); i++) {
                 if (i == 0) {
-                    MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).toggle = MicroClass.LEFT;
+                    MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).toggle = MicroClassChild.LEFT;
                     lv2Title = MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).getLv2Title();
 
                 } else {
                     //1   toggle左 title相同  -- 布局左 toggle左
                     //4   toggle右   title不同  -- 左   toggle左
-                    if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClass.LEFT
+                    if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClassChild.LEFT
                             && lv2Title.equals(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).getLv2Title()) ||
-                            MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClass.RIGHT
+                            MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClassChild.RIGHT
                                     && !lv2Title.equals(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).getLv2Title())) {
-                        MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).toggle = MicroClass.LEFT;
+                        MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).toggle = MicroClassChild.LEFT;
                     }
                     //2   toggle左  title不同 -- 右     toggle右
                     //3   toggle右  title相同  -- 右    toggle右
-                    if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClass.LEFT
+                    if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClassChild.LEFT
                             && !lv2Title.equals(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).getLv2Title()) ||
-                            (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClass.RIGHT
+                            (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i - 1).toggle == MicroClassChild.RIGHT
                                     && lv2Title.equals(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).getLv2Title()))) {
-                        MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).toggle = MicroClass.RIGHT;
+                        MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).toggle = MicroClassChild.RIGHT;
                     }
                 }
                 lv2Title = MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(i).getLv2Title();
             }
         }
 
-        if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).toggle == MicroClass.LEFT) {
+        if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).toggle == MicroClassChild.LEFT) {
             viewHolderChild.rightView.setVisibility(View.GONE);
             viewHolderChild.leftView.setVisibility(View.VISIBLE);
             viewHolderChild.tv_microclass_left_lv2Title.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getLv2Title());
+            viewHolderChild.tv_microclass_left_lv2Step.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getLv2Step());
             viewHolderChild.tv_microclass_left_lv3Title.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getLv3Title());
             viewHolderChild.tv_microclass_left_articleSource.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getArticleSource());
             viewHolderChild.iv_microclass_left_articleImage.setImageResource(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getArticleImage());
         }
-        if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).toggle == MicroClass.RIGHT) {
+        if (MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).toggle == MicroClassChild.RIGHT) {
             viewHolderChild.rightView.setVisibility(View.VISIBLE);
             viewHolderChild.leftView.setVisibility(View.GONE);
             viewHolderChild.tv_microclass_right_lv2Title.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getLv2Title());
+            viewHolderChild.tv_microclass_right_lv2Step.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getLv2Step());
             viewHolderChild.tv_microclass_right_lv3Title.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getLv3Title());
             viewHolderChild.tv_microclass_right_articleSource.setText(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getArticleSource());
             viewHolderChild.iv_microclass_right_articleImage.setImageResource(MicroClassData.microClassGroups.get(groupPosition).getMicroClasseGroup().get(childPosition).getArticleImage());
@@ -159,6 +163,7 @@ public class ExpandableListViexAdapter extends AnimatedExpandableListView.Animat
     public boolean hasStableIds() {
         return false;
     }
+
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
@@ -178,17 +183,18 @@ public class ExpandableListViexAdapter extends AnimatedExpandableListView.Animat
 
         //left
         private TextView tv_microclass_left_lv2Title;
+        private TextView tv_microclass_left_lv2Step;
         private TextView tv_microclass_left_lv3Title;
         private TextView tv_microclass_left_articleSource;
         private ImageView iv_microclass_left_articleImage;
 
         //right
         private TextView tv_microclass_right_lv2Title;
+        private TextView tv_microclass_right_lv2Step;
         private TextView tv_microclass_right_lv3Title;
         private TextView tv_microclass_right_articleSource;
         private ImageView iv_microclass_right_articleImage;
     }
-
 
 
 }

@@ -40,7 +40,6 @@ public class PreparationFragment extends BaseFragment {
         initListener();
         getActivity().getActionBar().setTitle("婚前筹备");
         initActionBar();
-
     }
 
     @Override
